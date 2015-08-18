@@ -33,11 +33,14 @@ namespace tank.Code.Entities.Tank
         {
             base.Update();
             drive();
-            shoot(1, 1);
+            //shoot(1, 1);
 
-            //update direction vector for easy shooting
-            Direction.X = (float)Math.Sin(_image.Angle * Util.DEG_TO_RAD) * _speed;
-            Direction.Y = (float)Math.Cos(_image.Angle * Util.DEG_TO_RAD) * _speed;
+            if (_image != null)
+            {
+                //update direction vector for easy shooting
+                Direction.X = (float)Math.Sin(_image.Angle * Util.DEG_TO_RAD) * _speed;
+                Direction.Y = (float)Math.Cos(_image.Angle * Util.DEG_TO_RAD) * _speed;
+            }
         }
 
         /// <summary>
