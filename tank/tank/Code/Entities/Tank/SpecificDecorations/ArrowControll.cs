@@ -17,7 +17,7 @@ namespace tank.Code.Entities.Tank.SpecificDecorations
 
         public override void drive()
         {
-            Console.WriteLine("Arrowcontroll drive");
+            //Console.WriteLine("Arrowcontroll drive");
             if (Input.KeyDown(Key.Up))
             {
                 tank.move_forward();
