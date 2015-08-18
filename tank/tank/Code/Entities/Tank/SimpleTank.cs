@@ -41,6 +41,8 @@ namespace tank.Code.Entities.Tank
         /// </summary>
         public override void drive()
         {
+            if (Scene == null)
+                return;
             if (Input.KeyDown(Key.W))
             {
                 move_forward();

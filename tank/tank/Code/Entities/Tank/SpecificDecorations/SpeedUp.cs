@@ -13,6 +13,15 @@ namespace tank.Code.Entities.Tank
             tank = t;
             tank._speed++;
         }
-        
+
+        public override void drive()
+        {
+            tank.drive();
+        }
+
+        public override void Update()
+        {
+            tank.Update();
+        }
     }
 }
