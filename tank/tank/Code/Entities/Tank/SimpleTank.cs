@@ -57,28 +57,43 @@ namespace tank.Code.Entities.Tank
 
         public void move_forward()
         {
-            _image.X = _image.X + _direction.X * _speed;
-            _image.Y = _image.Y + _direction.Y * _speed;
+            _image.X += (float)Math.Cos(_image.Angle) * _speed;
+            _image.Y += (float)Math.Sin(_image.Angle) * _speed;
+            //_image.X = _image.X - _direction.X * _speed;
+            //_image.Y = _image.Y - _direction.Y * _speed;
+
         }
         public void move_turn_left()
         {
+            Console.WriteLine("Angle :"+_image.Angle);
             _image.Angle = _image.Angle + _rotationspeed;
-            float g = _image.Angle;
-            _direction = new Vector2((float)-Math.Sin(g), (float)Math.Cos(g));
-            _direction.Normalize();
+            Console.WriteLine("Angle updated:" + _image.Angle);
+
+
+            //float g = _rotationspeed;
+            //Console.WriteLine("_direction before :" + _direction);
+            //_direction = new Vector2((float)(Math.Cos(g) * _direction.X -Math.Sin(g) * _direction.Y), (float)(_direction.Y *Math.Cos(g) + _direction.X * Math.Sin(g)));
+            //Console.WriteLine("_direction after :" + _direction);
+            //_direction.Normalize();
         }
         public void move_turn_right()
         {
+            Console.WriteLine("Angle :" + _image.Angle);
             _image.Angle = _image.Angle - _rotationspeed;
-            float g = _image.Angle;
-            _direction = new Vector2((float)-Math.Sin(g), (float)Math.Cos(g));
-            _direction.Normalize();
+            Console.WriteLine("Angle updated:" + _image.Angle);
+            //float g = -_rotationspeed;
+            //Console.WriteLine("_direction before :" + _direction);
+            //_direction = new Vector2((float)(Math.Cos(g) * _direction.X - Math.Sin(g) * _direction.Y), (float)(_direction.Y * Math.Cos(g) + _direction.X * Math.Sin(g)));
+            //Console.WriteLine("_direction after :" + _direction);
+            //_direction.Normalize();
 
         }
         public void move_backwards()
         {
-            _image.X = _image.X + _direction.X * _speed;
-            _image.Y = _image.Y + _direction.Y * _speed;
+            _image.X -= (float)Math.Cos(_image.Angle) * _speed;
+            _image.Y -= (float)Math.Sin(_image.Angle) * _speed;
+            //_image.X = _image.X + _direction.X * _speed;
+            //_image.Y = _image.Y + _direction.Y * _speed;
         }
     }
 }
