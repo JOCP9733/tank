@@ -46,6 +46,7 @@
     <Compile Include="Code\Entities\Tank\SimpleTank.cs" />
     <Compile Include="Code\Entities\Tank\Tank.cs" />
     <Compile Include="Code\Entities\Tank\TankDecorator.cs" />
+    <Compile Include="Code\GameMode\TestingMode\GeneralGameScene.cs" />
     <Compile Include="Code\Utilities.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
