@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Otter;
+using tank.Code.Entities.Tank;
 
 namespace tank.Code.GameMode.TestingMode
 {
@@ -14,6 +15,7 @@ namespace tank.Code.GameMode.TestingMode
         public GeneralGameScene()
         {
             Scene = new Scene();
+            Scene.Add(new SimpleTank(50, 50));
         }
     }
 }

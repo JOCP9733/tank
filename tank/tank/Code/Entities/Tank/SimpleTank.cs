@@ -41,7 +41,7 @@ namespace tank.Code.Entities.Tank
             {
 
             }
-
+            
         }
         /// <summary>
         ///  Methode which is necessary to implement simple shooting

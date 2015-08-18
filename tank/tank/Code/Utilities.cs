@@ -11,8 +11,6 @@ namespace tank.Code
     /// </summary>
     class Utilities
     {
-
-
-
+        
     }
 }
