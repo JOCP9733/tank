@@ -57,8 +57,8 @@ namespace tank.Code.Entities.Tank
 
         public void move_forward()
         {
-            _image.X += (float)Math.Cos(_image.Angle) * _speed;
-            _image.Y += (float)Math.Sin(_image.Angle) * _speed;
+            _image.X -= (float)Math.Sin(_image.Angle * Util.DEG_TO_RAD) * _speed;
+            _image.Y -= (float)Math.Cos(_image.Angle * Util.DEG_TO_RAD) * _speed;
             //_image.X = _image.X - _direction.X * _speed;
             //_image.Y = _image.Y - _direction.Y * _speed;
 
@@ -90,8 +90,8 @@ namespace tank.Code.Entities.Tank
         }
         public void move_backwards()
         {
-            _image.X -= (float)Math.Cos(_image.Angle) * _speed;
-            _image.Y -= (float)Math.Sin(_image.Angle) * _speed;
+            _image.X += (float)Math.Sin(_image.Angle * Util.DEG_TO_RAD) * _speed;
+            _image.Y += (float)Math.Cos(_image.Angle * Util.DEG_TO_RAD) * _speed;
             //_image.X = _image.X + _direction.X * _speed;
             //_image.Y = _image.Y + _direction.Y * _speed;
         }
