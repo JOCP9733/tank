@@ -14,7 +14,7 @@ namespace tank.Code.Entities.Tank
     abstract class Tank : Entity
     {
         protected Image _image ;
-        protected float _speed = 4;
+        public float _speed = 4;
         protected float _rotationspeed = 2;
         protected Vector2 Direction = new Vector2(0f, 1f);
 

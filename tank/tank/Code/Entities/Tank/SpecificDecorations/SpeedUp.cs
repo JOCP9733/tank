@@ -10,7 +10,9 @@ namespace tank.Code.Entities.Tank
     class SpeedUp: TankDecorator
     {
         public SpeedUp(Tank t) : base(t) {
-            _speed++;
+            tank = t;
+            tank._speed++;
         }
+        
     }
 }
