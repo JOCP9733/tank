@@ -13,4 +13,10 @@ namespace tank.Code
     {
         
     }
+
+    enum CollidableTags
+    {
+        Bullet,
+        Tank
+    }
 }

@@ -16,7 +16,7 @@ namespace tank.Code.Entities.Tank
         protected Image _image ;
         public float _speed = 4;
         protected float _rotationspeed = 2;
-        private Vector2 _direction = new Vector2(0f, 1f);
+        protected Vector2 Direction = new Vector2(0f, 1f);
 
         /// <summary>
         /// abstract Method, which should be ovrwritten by 
@@ -33,6 +33,10 @@ namespace tank.Code.Entities.Tank
         {
             base.Update();
             drive();
+
+            //update direction vector for easy shooting
+            Direction.X = (float)Math.Sin(_image.Angle * Util.DEG_TO_RAD) * _speed;
+            Direction.Y = (float)Math.Cos(_image.Angle * Util.DEG_TO_RAD) * _speed;
         }
 
         /// <summary>
@@ -40,8 +44,8 @@ namespace tank.Code.Entities.Tank
         /// </summary>
         public void move_forward()
         {
-            _image.X -= (float)Math.Sin(_image.Angle * Util.DEG_TO_RAD) * _speed;
-            _image.Y -= (float)Math.Cos(_image.Angle * Util.DEG_TO_RAD) * _speed;
+            X -= (float)Math.Sin(_image.Angle * Util.DEG_TO_RAD) * _speed;
+            Y -= (float)Math.Cos(_image.Angle * Util.DEG_TO_RAD) * _speed;
         }
         /// <summary>
         /// turns the Tank right
@@ -62,8 +66,8 @@ namespace tank.Code.Entities.Tank
         /// </summary>
         public void move_backwards()
         {
-            _image.X += (float)Math.Sin(_image.Angle * Util.DEG_TO_RAD) * _speed;
-            _image.Y += (float)Math.Cos(_image.Angle * Util.DEG_TO_RAD) * _speed;
+            X += (float)Math.Sin(_image.Angle * Util.DEG_TO_RAD) * _speed;
+            Y += (float)Math.Cos(_image.Angle * Util.DEG_TO_RAD) * _speed;
         }
     }
 }

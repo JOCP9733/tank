@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Otter;
+using tank.Code.Entities.Weapons;
 
 namespace tank.Code.Entities.Tank
 {
@@ -32,7 +33,7 @@ namespace tank.Code.Entities.Tank
         /// </summary>
         public override void shoot(float x, float y)
         {
-            throw new NotImplementedException();
+            Scene.Add(new Bullet(X, Y, Direction.X, Direction.Y, _image.Angle));
         }
         /// <summary>
         /// Methode which is necessary to implement simple driving
