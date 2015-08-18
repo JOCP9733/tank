@@ -33,7 +33,8 @@ namespace tank.Code.Entities.Tank
         /// </summary>
         public override void shoot(float x, float y)
         {
-            Scene.Add(new Bullet(X, Y, Direction.X, Direction.Y, _image.Angle));
+            if(Input.KeyDown(Key.Space))
+                Scene.Add(new Bullet(X, Y, Direction.X, Direction.Y, _image.Angle));
         }
         /// <summary>
         /// Methode which is necessary to implement simple driving
