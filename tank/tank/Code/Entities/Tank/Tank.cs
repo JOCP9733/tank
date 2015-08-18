@@ -24,5 +24,10 @@ namespace tank.Code.Entities.Tank
         /// </summary>
         abstract public void drive();
 
+        public override void Update()
+        {
+            base.Update();
+            drive();
+        }
     }
 }

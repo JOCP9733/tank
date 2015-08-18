@@ -14,7 +14,7 @@ namespace tank.Code.Entities.Tank
     class SimpleTank : Tank
     {
         private float _health = 100;
-        private Image _image =  new Image("/Resources/tank.png");
+        private Image _image =  new Image("Resources/tank.png");
         protected float _speed = 4;
         protected float _rotationspeed = 2;
         private Vector2 _direction = new Vector2(0f,1f);
