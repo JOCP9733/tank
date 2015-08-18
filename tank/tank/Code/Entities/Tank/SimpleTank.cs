@@ -58,25 +58,27 @@ namespace tank.Code.Entities.Tank
         public void move_forward()
         {
             _image.X = _image.X + _direction.X * _speed;
+            _image.Y = _image.Y + _direction.Y * _speed;
         }
         public void move_turn_left()
-        {
-            _image.Angle = _image.Angle - _rotationspeed;
-            float g = _image.Angle;
-            _direction = new Vector2( (float)-Math.Sin(g) ,(float)Math.Cos(g) );
-            _direction.Normalize();
-
-        }
-        public void move_turn_right()
         {
             _image.Angle = _image.Angle + _rotationspeed;
             float g = _image.Angle;
             _direction = new Vector2((float)-Math.Sin(g), (float)Math.Cos(g));
             _direction.Normalize();
         }
+        public void move_turn_right()
+        {
+            _image.Angle = _image.Angle - _rotationspeed;
+            float g = _image.Angle;
+            _direction = new Vector2((float)-Math.Sin(g), (float)Math.Cos(g));
+            _direction.Normalize();
+
+        }
         public void move_backwards()
         {
-            _image.X = _image.X - _direction.X * _speed;
+            _image.X = _image.X + _direction.X * _speed;
+            _image.Y = _image.Y + _direction.Y * _speed;
         }
     }
 }
