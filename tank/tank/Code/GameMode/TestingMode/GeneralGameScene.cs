@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Otter;
 using tank.Code.Entities.Tank;
+using tank.Code.Entities.Tank.SpecificDecorations;
 
 namespace tank.Code.GameMode.TestingMode
 {
@@ -15,7 +16,7 @@ namespace tank.Code.GameMode.TestingMode
         public GeneralGameScene()
         {
             Scene = new Scene();
-            Scene.Add(new SimpleTank(50, 50));
+            Scene.Add(new SpeedUp(new ArrowControll(new SimpleTank(50, 50))));
         }
     }
 }

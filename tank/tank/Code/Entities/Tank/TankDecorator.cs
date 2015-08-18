@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Otter;
 
 namespace tank.Code.Entities.Tank
 {
@@ -15,6 +16,7 @@ namespace tank.Code.Entities.Tank
         public TankDecorator(Tank t)
         {
             this.tank = t;
+            AddGraphic((Image)t.Graphic);
         }
 
         public override void drive()
