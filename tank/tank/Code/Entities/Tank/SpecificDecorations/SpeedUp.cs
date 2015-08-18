@@ -9,26 +9,8 @@ namespace tank.Code.Entities.Tank
 {
     class SpeedUp: TankDecorator
     {
-        public SpeedUp(Tank t) : base(t) { }
-
-        public override void drive()
-        {
-            if (Input.KeyDown(Key.Up))
-            {
-
-            }
-            if (Input.KeyDown(Key.Left))
-            {
-
-            }
-            if (Input.KeyDown(Key.Down))
-            {
-
-            }
-            if (Input.KeyDown(Key.Right))
-            {
-
-            }
+        public SpeedUp(Tank t) : base(t) {
+            _speed++;
         }
     }
 }

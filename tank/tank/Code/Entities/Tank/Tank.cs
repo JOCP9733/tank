@@ -13,6 +13,11 @@ namespace tank.Code.Entities.Tank
     /// </summary>
     abstract class Tank : Entity
     {
+        protected Image _image ;
+        protected float _speed = 4;
+        protected float _rotationspeed = 2;
+        private Vector2 _direction = new Vector2(0f, 1f);
+
         /// <summary>
         /// abstract Method, which should be ovrwritten by 
         /// the Decorators
@@ -28,6 +33,37 @@ namespace tank.Code.Entities.Tank
         {
             base.Update();
             drive();
+        }
+
+        /// <summary>
+        /// moves the tank forward
+        /// </summary>
+        public void move_forward()
+        {
+            _image.X -= (float)Math.Sin(_image.Angle * Util.DEG_TO_RAD) * _speed;
+            _image.Y -= (float)Math.Cos(_image.Angle * Util.DEG_TO_RAD) * _speed;
+        }
+        /// <summary>
+        /// turns the Tank right
+        /// </summary>
+        public void move_turn_left()
+        {
+            _image.Angle = _image.Angle + _rotationspeed;
+        }
+        /// <summary>
+        /// turns the tank left
+        /// </summary>
+        public void move_turn_right()
+        {
+            _image.Angle = _image.Angle - _rotationspeed;
+        }
+        /// <summary>
+        /// moves the tank backwards
+        /// </summary>
+        public void move_backwards()
+        {
+            _image.X += (float)Math.Sin(_image.Angle * Util.DEG_TO_RAD) * _speed;
+            _image.Y += (float)Math.Cos(_image.Angle * Util.DEG_TO_RAD) * _speed;
         }
     }
 }
