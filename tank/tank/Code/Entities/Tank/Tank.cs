@@ -20,7 +20,7 @@ namespace tank.Code.Entities.Tank
         protected Image _image;
         public float _speed = 4;
         protected float _rotationspeed = 2;
-        protected Vector2 Direction = new Vector2(0f, 1f);
+        public Vector2 Direction = new Vector2(0f, 1f);
 
         /// <summary>
         /// abstract Method, which should be ovrwritten by 
