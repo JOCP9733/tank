@@ -17,7 +17,6 @@ namespace tank.Code.Entities.Weapons
 
         public Bullet(float x, float y, float dX, float dY, float degOrientation, Collider tankOriginCollider) : base(x, y)
         {
-
             if (_texture == null)
                 _texture = new Texture("Resources/Bullet.png");
             _image = new Image(_texture);
@@ -40,15 +39,13 @@ namespace tank.Code.Entities.Weapons
             X -= _direction.X;
             Y -= _direction.Y;
 
-            Collider.Collide(X, Y, _tankOriginCollider);
-
             if (Collider.Overlap(X, Y, CollidableTags.Tank))
             {
                 //fancy scala-like stuff :D this finds all the tanks which are not the one that fired, and deletes them if the bullet hits. this should
                 //probably somehow be in the tank to enable changing between bouncy and teamkill etc...
                 Collider.CollideEntities(X, Y, CollidableTags.Tank).Where(e => !e.Collider.Overlap(X, Y, _tankOriginCollider)).Each(e => e.RemoveSelf());
                 
-                //RemoveSelf();
+                RemoveSelf();
             }
         }
     }
