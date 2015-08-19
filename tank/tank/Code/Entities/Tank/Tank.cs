@@ -50,7 +50,7 @@ namespace tank.Code.Entities.Tank
         {
             X -= (float)Math.Sin(_image.Angle * Util.DEG_TO_RAD) * _speed;
             Y -= (float)Math.Cos(_image.Angle * Util.DEG_TO_RAD) * _speed;
-            //TODO: find a way how the Decorator doesn't needs this
+            //TODO: find a way how the Decorator doesn't need this
             _image.X = X;
             _image.Y = Y;
         }
@@ -75,7 +75,7 @@ namespace tank.Code.Entities.Tank
         {
             X += (float)Math.Sin(_image.Angle * Util.DEG_TO_RAD) * _speed;
             Y += (float)Math.Cos(_image.Angle * Util.DEG_TO_RAD) * _speed;
-            //TODO: find a way how the Decorator doesn't needs this
+            //TODO: find a way how the Decorator doesn't need this
             _image.X = X;
             _image.Y = Y;
         }

@@ -8,9 +8,9 @@ using Otter;
 namespace tank.Code.Entities.Tank.SpecificDecorations
 {
 
-    class ArrowControll: TankDecorator
+    class ArrowControl: TankDecorator
     {
-        public ArrowControll(Tank t): base(t) {
+        public ArrowControl(Tank t): base(t) {
             tank = t;
         }
     

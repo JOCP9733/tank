@@ -44,7 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Code\Entities\Tank\SimpleTank.cs" />
-    <Compile Include="Code\Entities\Tank\SpecificDecorations\ArrowControll.cs" />
+    <Compile Include="Code\Entities\Tank\SpecificDecorations\ArrowControl.cs" />
     <Compile Include="Code\Entities\Tank\SpecificDecorations\SpeedUp.cs" />
     <Compile Include="Code\Entities\Tank\Tank.cs" />
     <Compile Include="Code\Entities\Tank\TankDecorator.cs" />
