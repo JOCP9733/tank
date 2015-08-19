@@ -7,21 +7,38 @@ using Otter;
 
 namespace tank.Code.Entities.Tank
 {
+  
+    //TODO: get this shit working 
     class SpeedUp: TankDecorator
     {
         public SpeedUp(Tank t) : base(t) {
+            t._speed = t._speed + 5;
             tank = t;
-            tank._speed++;
         }
 
         public override void drive()
         {
-            tank.drive();
-        }
+            base.drive();
 
-        public override void Update()
-        {
-            tank.Update();
+            //if (Scene == null)
+            //    return;
+            //if (Input.KeyDown(Key.W))
+            //{
+            //    tank.move_forward();
+            //}
+            //if (Input.KeyDown(Key.A))
+            //{
+            //    tank.move_turn_left();
+            //}
+            //if (Input.KeyDown(Key.S))
+            //{
+            //    tank.move_backwards();
+            //}
+            //if (Input.KeyDown(Key.D))
+            //{
+            //    tank.move_turn_right();
+            //}
+
         }
     }
 }

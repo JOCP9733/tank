@@ -18,5 +18,5 @@ namespace tank.Code.GameMode.TestingMode
             Scene = new Scene();
             Scene.Add(new ArrowControll(new SimpleTank(50, 50)));
         }
-    }
+    }    
 }
