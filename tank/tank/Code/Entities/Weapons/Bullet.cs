@@ -15,7 +15,7 @@ namespace tank.Code.Entities.Weapons
         private readonly Vector2 _direction;
         private readonly Collider _tankOriginCollider;
 
-        public Bullet(float x, float y, float dX, float dY, float degOrientation, Collider tankOriginCollider) : base(x, y)
+        public Bullet(float x, float y, float degOrientation, Collider tankOriginCollider) : base(x, y)
         {
             if (_texture == null)
                 _texture = new Texture("Resources/Bullet.png");
@@ -27,7 +27,8 @@ namespace tank.Code.Entities.Weapons
             AddGraphic(_image);
             _image.Angle = degOrientation + 90;
 
-            _direction = new Vector2(4*dX, 4*dY);
+            _direction = new Vector2(4* (float)Math.Sin(degOrientation * Util.DEG_TO_RAD), 
+                4 * (float)Math.Cos(degOrientation * Util.DEG_TO_RAD));
 
             _tankOriginCollider = tankOriginCollider;
         }

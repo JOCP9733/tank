@@ -11,7 +11,7 @@ namespace tank.Code.Entities.Tank.Logics.Decorators
     {
         private bool _disableSpaceKey;
 
-        public ControlWasd(ProtoLogic pLogic) : base(pLogic)
+        public ControlWasd(ILogic pLogic) : base(pLogic)
         {
         }
 
@@ -20,7 +20,7 @@ namespace tank.Code.Entities.Tank.Logics.Decorators
             base.Update();
             shoot();
             drive();
-            Tank.Logic = new ControlWasd((ProtoLogic) Tank.Logic);
+            Tank.Logic = new ControlWasd(Tank.Logic);
         }
 
 

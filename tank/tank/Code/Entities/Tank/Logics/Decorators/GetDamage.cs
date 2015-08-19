@@ -11,9 +11,9 @@ namespace tank.Code.Entities.Tank.Logics.Decorators
     {
         private bool _disableSpaceKey;
 
-        public GetDamage(ProtoLogic pLogic) : base(pLogic)
+        public GetDamage(ILogic pLogic) : base(pLogic)
         {
-            Tank.AddCollider(new BoxCollider(Tank.Graphic.Width, Tank.Graphic.Height, CollidableTags.Tank));
+            Tank.AddCollider(new PolygonCollider(new Polygon(50,50,50,50,50,50), CollidableTags.Tank));
         }
 
         public override void Update()
