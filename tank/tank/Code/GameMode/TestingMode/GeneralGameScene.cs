@@ -18,7 +18,6 @@ namespace tank.Code.GameMode.TestingMode
 
         public GeneralGameScene()
         {
-            
             Scene = new Scene();
             Scene.Add(tank);
             Scene.Add(tank2);

@@ -39,6 +39,12 @@ namespace tank.Code.Entities.Tank
             AddGraphic(_image);
         }
 
+        public override void Render()
+        {
+            base.Render();
+            Collider?.Render();
+        }
+
         public override void Added()
         {
             base.Added();
@@ -131,7 +137,7 @@ namespace tank.Code.Entities.Tank
         /// </summary>
         public virtual void FireBullet()
         {
-            Scene.Add(new Bullet(X, Y, Direction.X, Direction.Y, _image.Angle, Collider));
+            Scene.Add(new Bullet(X, Y, _image.Angle, Collider));
         }
     }
 }

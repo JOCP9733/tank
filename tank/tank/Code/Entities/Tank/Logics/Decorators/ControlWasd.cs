@@ -20,7 +20,7 @@ namespace tank.Code.Entities.Tank.Logics.Decorators
             base.Update();
             shoot();
             drive();
-            Tank.Logic = new ControlWasd((ProtoLogic) Tank.Logic);
+            Tank.Logic = new ControlWasd(Tank.Logic);
         }
 
 
