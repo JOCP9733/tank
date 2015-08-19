@@ -13,7 +13,14 @@ namespace tank.Code.Entities.Tank.SpecificDecorations
         public ArrowControl(Tank t): base(t) {
             tank = t;
         }
-    
+
+        public override void shoot()
+        {
+            if (Input.KeyDown(Key.RControl))
+            {
+                tank.FireBullet();
+            }
+        }
 
         public override void drive()
         {
@@ -34,7 +41,6 @@ namespace tank.Code.Entities.Tank.SpecificDecorations
             {
                 tank.move_turn_right();
             }
-
         }
     
     }

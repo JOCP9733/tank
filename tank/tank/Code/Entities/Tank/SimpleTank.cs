@@ -11,38 +11,41 @@ namespace tank.Code.Entities.Tank
     /// <summary>
     /// Simple Tank, which should be initialized as a Tank with needed
     /// decorators
+    /// exp:
+    /// defines an object to which additional responsibilities can be attached.
     /// </summary>
     class SimpleTank : Tank
     {
         private float _health = 100;
 
-
-        public SimpleTank(float xPos, float yPos):base()
+        public SimpleTank(float xPos, float yPos) : base()
         {
             Console.WriteLine("simpleTank");
             _image = new Image("Resources/tank.png");
             X = xPos;
             Y = yPos;
-            _image.X = xPos;
-            _image.Y = yPos;
+            //entity handles that
+            //_image.X = xPos;
+            //_image.Y = yPos;
             _image.CenterOrigin();
-            AddGraphics(_image);
+            AddGraphic(_image);
         }
+
         /// <summary>
-        ///  Methode which is necessary to implement simple shooting
+        ///  Method which is necessary to implement simple shooting
         /// </summary>
-        public override void shoot(float x, float y)
+        public override void shoot()
         {
+            //return;
             if(Input.KeyDown(Key.Space))
-                Scene.Add(new Bullet(X, Y, Direction.X, Direction.Y, _image.Angle));
+                FireBullet();
         }
+
         /// <summary>
-        /// Methode which is necessary to implement simple driving
+        /// Method which is necessary to implement simple driving
         /// </summary>
         public override void drive()
         {
-            if (Scene == null)
-                return;
             if (Input.KeyDown(Key.W))
             {
                 move_forward();
@@ -59,7 +62,6 @@ namespace tank.Code.Entities.Tank
             {
                 move_turn_right();
             }
-            
         }
 
     }

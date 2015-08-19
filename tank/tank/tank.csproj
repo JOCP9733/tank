@@ -56,6 +56,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\kylepulver-otter-576ca2e251d4\Otter\Otter.csproj">
@@ -68,6 +70,9 @@
     <Folder Include="Code\Menu\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\Bullet.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\tank.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
