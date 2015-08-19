@@ -44,9 +44,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Code\Entities\Tank\Logics\Decorators\ControlJoy.cs" />
+    <Compile Include="Code\Entities\Tank\Logics\Decorators\ControlSimpleKI.cs" />
     <Compile Include="Code\Entities\Tank\Logics\Decorators\GetDamage.cs" />
     <Compile Include="Code\Entities\Tank\Logics\Decorators\ControlArrow.cs" />
     <Compile Include="Code\Entities\Tank\Logics\Decorators\ControlWasd.cs" />
+    <Compile Include="Code\Entities\Tank\Logics\Decorators\SpeedUp.cs" />
     <Compile Include="Code\Entities\Tank\Logics\ILogic.cs" />
     <Compile Include="Code\Entities\Tank\Logics\ProtoLogic.cs" />
     <Compile Include="Code\Entities\Tank\Logics\LogicDecorator.cs" />

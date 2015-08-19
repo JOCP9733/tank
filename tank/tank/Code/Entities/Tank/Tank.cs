@@ -59,11 +59,17 @@ namespace tank.Code.Entities.Tank
                 case Decorators.ControlJoy:
                     Logic = new ControlJoy(protoLogic);
                     break;
+                case Decorators.ControlSimpleKi:
+                    Logic = new ControlSimpleKI(protoLogic);
+                    break;
                 case Decorators.ControlWasd:
                     Logic = new ControlWasd(protoLogic);
                     break;
                 case Decorators.GetDamage:
                     Logic = new GetDamage(protoLogic);
+                    break;
+                case Decorators.SpeedUp:
+                    Logic = new SpeedUp(protoLogic);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(deco), deco, null);

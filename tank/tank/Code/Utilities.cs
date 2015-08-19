@@ -25,6 +25,8 @@ namespace tank.Code
         ControlArrow,
         ControlJoy,
         ControlWasd,
+        ControlSimpleKi,
+        SpeedUp,
         GetDamage
     }
 }
