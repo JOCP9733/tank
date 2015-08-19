@@ -27,6 +27,9 @@ namespace tank.Code.GameMode.TestingMode
         private void initialise()
         {
             tank.AddDecorator(Decorators.ControlJoy);
+            tank.AddDecorator(Decorators.GetDamage);
+
+            tank2.AddDecorator(Decorators.GetDamage);
             tank2.AddDecorator(Decorators.ControlSimpleKi);
             tank2.AddDecorator(Decorators.SpeedUp);
         }

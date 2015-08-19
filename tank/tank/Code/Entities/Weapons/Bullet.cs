@@ -11,26 +11,28 @@ namespace tank.Code.Entities.Weapons
     internal class Bullet : Entity
     {
         private static Texture _texture;
-        private readonly Image _image;
         private readonly Vector2 _direction;
-        private readonly Collider _tankOriginCollider;
+        private readonly Tank.Tank _originTank;
+        private readonly Polygon _basePolygon = new Polygon(5,3, 80,4, 88,10, 81,17, 7,16);
 
-        public Bullet(float x, float y, float degOrientation, Collider tankOriginCollider) : base(x, y)
+        public Bullet(float x, float y, float degOrientation, Tank.Tank originTank) : base(x, y)
         {
             if (_texture == null)
                 _texture = new Texture("Resources/Bullet.png");
-            _image = new Image(_texture);
 
-            Collider collider = new BoxCollider(_image.Width, _image.Height, CollidableTags.Bullet);
+            var image = new Image(_texture);
+
+            _originTank = originTank;
+
+            var collider = new PolygonCollider(_basePolygon, CollidableTags.Bullet);
+            Utilities.RotatePolygon(degOrientation + 90, collider, _basePolygon);
             AddCollider(collider);
 
-            AddGraphic(_image);
-            _image.Angle = degOrientation + 90;
+            AddGraphic(image);
+            image.Angle = degOrientation + 90;
 
             _direction = new Vector2(4* (float)Math.Sin(degOrientation * Util.DEG_TO_RAD), 
                 4 * (float)Math.Cos(degOrientation * Util.DEG_TO_RAD));
-
-            _tankOriginCollider = tankOriginCollider;
         }
 
         public override void Render()
@@ -48,10 +50,14 @@ namespace tank.Code.Entities.Weapons
 
             if (Collider.Overlap(X, Y, CollidableTags.Tank))
             {
-                //fancy scala-like stuff :D this finds all the tanks which are not the one that fired, and deletes them if the bullet hits. this should
-                //probably somehow be in the tank to enable changing between bouncy and teamkill etc...
-                //Collider.CollideEntities(X, Y, CollidableTags.Tank).Where(e => !e.Collider.Overlap(X, Y, _tankOriginCollider)).Each(e => ((GetDamage) e).ReceiveDamage());
-                RemoveSelf();
+                foreach (var collideEntity in Collider.CollideEntities(X, Y, CollidableTags.Tank))
+                {
+                    if (collideEntity != _originTank)
+                    {
+                        collideEntity.RemoveSelf();
+                        RemoveSelf();
+                    }
+                }
             }
         }
     }

@@ -32,9 +32,6 @@ namespace tank.Code.Entities.Tank
             _image = new Image("Resources/tank.png");
             X = xPos;
             Y = yPos;
-            //entity handles that
-            //_image.X = xPos;
-            //_image.Y = yPos;
             _image.CenterOrigin();
             AddGraphic(_image);
         }
@@ -137,7 +134,7 @@ namespace tank.Code.Entities.Tank
         /// </summary>
         public virtual void FireBullet()
         {
-            Scene.Add(new Bullet(X, Y, _image.Angle, Collider));
+            Scene.Add(new Bullet(X, Y, _image.Angle, this));
         }
     }
 }

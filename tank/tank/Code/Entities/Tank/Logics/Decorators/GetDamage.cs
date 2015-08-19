@@ -9,19 +9,12 @@ namespace tank.Code.Entities.Tank.Logics.Decorators
 {
     class GetDamage : LogicDecorator
     {
-        private bool _disableSpaceKey;
-
         public GetDamage(ILogic pLogic) : base(pLogic)
         {
-            Tank.AddCollider(new PolygonCollider(new Polygon(50,50,50,50,50,50), CollidableTags.Tank));
+            Tank.AddCollider(new BoxCollider(Tank.Graphic.Width, Tank.Graphic.Height, CollidableTags.Tank));
+            Tank.Collider.CenterOrigin();
         }
-
-        public override void Update()
-        {
-            base.Update();
-            Tank.Collider.SetPosition(Tank.X, Tank.Y);
-        }
-
+        
         public void ReceiveDamage()
         {
             Tank.RemoveSelf();
