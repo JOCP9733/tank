@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Code\DataStructure\SceneInformation.cs" />
     <Compile Include="Code\Entities\Tank\SimpleTank.cs" />
     <Compile Include="Code\Entities\Tank\SpecificDecorations\SimpleKiControll.cs" />
     <Compile Include="Code\Entities\Tank\SpecificDecorations\GetDamage.cs" />

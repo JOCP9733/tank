@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Otter;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,17 +9,27 @@ namespace tank.Code.Entities.Tank.SpecificDecorations
 {
     class SimpleKiControll :TankDecorator
     {
-
-        private int steps;
         public SimpleKiControll(Tank t) : base(t)
         {
             tank = t;
         }
+        public override void Update()
+        {
+            base.Update();
+            drive();
+            shoot();
+        }
 
         public override void drive()
         {
-            
+            tank.move_forward();
+            tank.move_turn_right();
         }
 
+        public override void shoot()
+        {
+            
+
+        }
     }
 }
