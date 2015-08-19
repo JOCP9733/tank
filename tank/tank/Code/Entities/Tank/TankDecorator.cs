@@ -16,17 +16,7 @@ namespace tank.Code.Entities.Tank
         public TankDecorator(Tank t)
         {
             this.tank = t;
-        }
-
-        public override void Render()
-        {
-            base.Render();
-            tank.Render();
-        }
-
-        public override void Update()
-        {
-            base.Update();
+            AddGraphic((Image)t.Graphic);
         }
 
         public override void drive()

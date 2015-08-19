@@ -15,7 +15,8 @@ namespace tank.Code.Entities.Tank
     class SimpleTank : Tank
     {
         private float _health = 100;
-        
+
+
         public SimpleTank(float xPos, float yPos):base()
         {
             Console.WriteLine("simpleTank");
@@ -25,7 +26,7 @@ namespace tank.Code.Entities.Tank
             _image.X = xPos;
             _image.Y = yPos;
             _image.CenterOrigin();
-            AddGraphic(_image);
+            AddGraphics(_image);
         }
         /// <summary>
         ///  Methode which is necessary to implement simple shooting
@@ -40,6 +41,8 @@ namespace tank.Code.Entities.Tank
         /// </summary>
         public override void drive()
         {
+            if (Scene == null)
+                return;
             if (Input.KeyDown(Key.W))
             {
                 move_forward();
