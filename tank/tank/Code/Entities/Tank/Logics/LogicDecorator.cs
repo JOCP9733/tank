@@ -20,10 +20,11 @@ namespace tank.Code.Entities.Tank.Logics
         public LogicDecorator(ILogic pLogic)
         {
             Logic = pLogic;
-            Game = ((ProtoLogic)pLogic).Game;
-            Scene = ((ProtoLogic)pLogic).Scene;
-            Input = ((ProtoLogic)pLogic).Input;
-            Tank = ((ProtoLogic)pLogic).Tank;
+            ILogic start = Logic.getUpperMost();
+            Game = ((ProtoLogic)start).Game;
+            Scene = ((ProtoLogic)start).Scene;
+            Input = ((ProtoLogic)start).Input;
+            Tank = ((ProtoLogic)start).Tank;
         }
 
         public virtual void Update()
@@ -34,6 +35,10 @@ namespace tank.Code.Entities.Tank.Logics
         public virtual void Render()
         {
             Logic.Render();
+        }
+        public virtual ILogic getUpperMost()
+        {
+            return Logic.getUpperMost();
         }
     }
 }

@@ -30,5 +30,9 @@ namespace tank.Code.Entities.Tank.Logics
         public void Render()
         {
         }
+        public ILogic getUpperMost()
+        {
+            return this;
+        }
     }
 }

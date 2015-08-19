@@ -10,5 +10,6 @@ namespace tank.Code.Entities.Tank.Logics
     {
         void Update();
         void Render();
+        ILogic getUpperMost();
     }
 }
