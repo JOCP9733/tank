@@ -17,6 +17,7 @@ namespace tank.Code.Entities.Tank
     class SimpleTank : Tank
     {
         private float _health = 100;
+        private bool _disableSpaceKey;
 
         public SimpleTank(float xPos, float yPos) : base()
         {
@@ -37,8 +38,13 @@ namespace tank.Code.Entities.Tank
         public override void shoot()
         {
             //return;
-            if(Input.KeyDown(Key.Space))
+            if (Input.KeyDown(Key.Space) && !_disableSpaceKey)
+            {
                 FireBullet();
+                _disableSpaceKey = true;
+            }
+            else if (Input.KeyUp(Key.Space))
+                _disableSpaceKey = false;
         }
 
         /// <summary>

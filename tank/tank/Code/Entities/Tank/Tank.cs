@@ -39,12 +39,12 @@ namespace tank.Code.Entities.Tank
             drive();
             shoot();
 
-            if (Graphic != null)
-            {
-                //update direction vector for easy shooting
-                Direction.X = (float)Math.Sin(Graphic.Angle * Util.DEG_TO_RAD) * _speed;
-                Direction.Y = (float)Math.Cos(Graphic.Angle * Util.DEG_TO_RAD) * _speed;
-            }
+            Console.WriteLine(Input.ButtonPressed(0));
+            
+            //update direction vector for easy shooting
+            Direction.X = (float)Math.Sin(Graphic.Angle * Util.DEG_TO_RAD) * _speed;
+            Direction.Y = (float)Math.Cos(Graphic.Angle * Util.DEG_TO_RAD) * _speed;
+            
         }
 
         /// <summary>
@@ -60,42 +60,32 @@ namespace tank.Code.Entities.Tank
         /// <summary>
         /// moves the tank forward
         /// </summary>
-        public void move_forward()
+        public virtual void move_forward()
         {
-            Direction.X = (float)Math.Sin(_image.Angle * Util.DEG_TO_RAD) * _speed;
-            Direction.Y = (float)Math.Cos(_image.Angle * Util.DEG_TO_RAD) * _speed;
-            X -= Direction.X;
-            Y -= Direction.Y;
-
-            //TODO: find a way how the Decorator doesn't need this
-            //TODO: Why the fuck is image not null here, but in Update it is o.O
-            //_image.X = X;
-            //_image.Y = Y;
+            X -= (float)Math.Sin(_image.Angle * Util.DEG_TO_RAD) * _speed;
+            Y -= (float)Math.Cos(_image.Angle * Util.DEG_TO_RAD) * _speed;
         }
         /// <summary>
         /// turns the Tank right
         /// </summary>
-        public void move_turn_left()
+        public virtual void move_turn_left()
         {
             _image.Angle = _image.Angle + _rotationspeed;
         }
         /// <summary>
         /// turns the tank left
         /// </summary>
-        public void move_turn_right()
+        public virtual void move_turn_right()
         {
             _image.Angle = _image.Angle - _rotationspeed;
         }
         /// <summary>
         /// moves the tank backwards
         /// </summary>
-        public void move_backwards()
+        public virtual void move_backwards()
         {
             X += (float)Math.Sin(_image.Angle * Util.DEG_TO_RAD) * _speed;
             Y += (float)Math.Cos(_image.Angle * Util.DEG_TO_RAD) * _speed;
-            //TODO: find a way how the Decorator doesn't need this
-            //_image.X = X;
-            //_image.Y = Y;
         }
     }
 }

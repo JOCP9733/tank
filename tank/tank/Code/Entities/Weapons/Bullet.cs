@@ -37,8 +37,8 @@ namespace tank.Code.Entities.Weapons
         {
             base.Update();
 
-            X += _direction.X;
-            Y += _direction.Y;
+            X -= _direction.X;
+            Y -= _direction.Y;
 
             Collider.Collide(X, Y, _tankOriginCollider);
 
