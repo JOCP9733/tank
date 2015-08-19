@@ -50,26 +50,26 @@ namespace tank.Code.Entities.Tank
             if(Game == null)
                 throw new ArgumentNullException("emtpy game");
 
-            ProtoLogic protoLogic = (ProtoLogic) Logic;
+           // ProtoLogic protoLogic = (ProtoLogic) Logic;
             switch (deco)
             {
                 case Decorators.ControlArrow:
-                    Logic = new ControlArrow(protoLogic);
+                    Logic = new ControlArrow(Logic);
                     break;
                 case Decorators.ControlJoy:
-                    Logic = new ControlJoy(protoLogic);
+                    Logic = new ControlJoy(Logic);
                     break;
                 case Decorators.ControlSimpleKi:
-                    Logic = new ControlSimpleKI(protoLogic);
+                    Logic = new ControlSimpleKI(Logic);
                     break;
                 case Decorators.ControlWasd:
-                    Logic = new ControlWasd(protoLogic);
+                    Logic = new ControlWasd(Logic);
                     break;
                 case Decorators.GetDamage:
-                    Logic = new GetDamage(protoLogic);
+                    Logic = new GetDamage(Logic);
                     break;
                 case Decorators.SpeedUp:
-                    Logic = new SpeedUp(protoLogic);
+                    Logic = new SpeedUp(Logic);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(deco), deco, null);

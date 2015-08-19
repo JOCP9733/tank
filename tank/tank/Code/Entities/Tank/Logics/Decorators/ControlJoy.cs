@@ -12,7 +12,7 @@ namespace tank.Code.Entities.Tank.Logics.Decorators
         private bool _disableButtonZero;
         private float _xFactor, _yFactor;
 
-        public ControlJoy(ProtoLogic pLogic) : base(pLogic)
+        public ControlJoy(ILogic pLogic) : base(pLogic)
         {
         }
 
