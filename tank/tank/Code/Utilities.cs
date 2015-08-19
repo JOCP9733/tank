@@ -19,4 +19,12 @@ namespace tank.Code
         Bullet,
         Tank
     }
+
+    enum Decorators
+    {
+        ControlArrow,
+        ControlJoy,
+        ControlWasd,
+        GetDamage
+    }
 }

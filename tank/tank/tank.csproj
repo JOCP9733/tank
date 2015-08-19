@@ -43,15 +43,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Code\Entities\Tank\SimpleTank.cs" />
-    <Compile Include="Code\Entities\Tank\SpecificDecorations\SimpleKiControll.cs" />
-    <Compile Include="Code\Entities\Tank\SpecificDecorations\GetDamage.cs" />
-    <Compile Include="Code\Entities\Tank\SpecificDecorations\WasdControl.cs" />
-    <Compile Include="Code\Entities\Tank\SpecificDecorations\JoyControl.cs" />
-    <Compile Include="Code\Entities\Tank\SpecificDecorations\ArrowControl.cs" />
-    <Compile Include="Code\Entities\Tank\SpecificDecorations\SpeedUp.cs" />
+    <Compile Include="Code\Entities\Tank\Logics\Decorators\ControlJoy.cs" />
+    <Compile Include="Code\Entities\Tank\Logics\Decorators\GetDamage.cs" />
+    <Compile Include="Code\Entities\Tank\Logics\Decorators\ControlArrow.cs" />
+    <Compile Include="Code\Entities\Tank\Logics\Decorators\ControlWasd.cs" />
+    <Compile Include="Code\Entities\Tank\Logics\ILogic.cs" />
+    <Compile Include="Code\Entities\Tank\Logics\ProtoLogic.cs" />
+    <Compile Include="Code\Entities\Tank\Logics\LogicDecorator.cs" />
     <Compile Include="Code\Entities\Tank\Tank.cs" />
-    <Compile Include="Code\Entities\Tank\TankDecorator.cs" />
     <Compile Include="Code\Entities\Weapons\Bullet.cs" />
     <Compile Include="Code\GameMode\TestingMode\GeneralGameScene.cs" />
     <Compile Include="Code\Utilities.cs" />

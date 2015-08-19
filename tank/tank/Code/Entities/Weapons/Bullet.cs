@@ -32,6 +32,12 @@ namespace tank.Code.Entities.Weapons
             _tankOriginCollider = tankOriginCollider;
         }
 
+        public override void Render()
+        {
+            base.Render();
+            Collider.Render();
+        }
+
         public override void Update()
         {
             base.Update();
@@ -43,8 +49,7 @@ namespace tank.Code.Entities.Weapons
             {
                 //fancy scala-like stuff :D this finds all the tanks which are not the one that fired, and deletes them if the bullet hits. this should
                 //probably somehow be in the tank to enable changing between bouncy and teamkill etc...
-                Collider.CollideEntities(X, Y, CollidableTags.Tank).Where(e => !e.Collider.Overlap(X, Y, _tankOriginCollider)).Each(e => e.RemoveSelf());
-                
+                //Collider.CollideEntities(X, Y, CollidableTags.Tank).Where(e => !e.Collider.Overlap(X, Y, _tankOriginCollider)).Each(e => ((GetDamage) e).ReceiveDamage());
                 RemoveSelf();
             }
         }

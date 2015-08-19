@@ -5,27 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Otter;
 
-namespace tank.Code.Entities.Tank.SpecificDecorations
+namespace tank.Code.Entities.Tank.Logics.Decorators
 {
-
-    class WasdControl: TankDecorator
+    class ControlWasd : LogicDecorator
     {
         private bool _disableSpaceKey;
 
-        public WasdControl(Tank t): base(t) {
-            tank = t;
-        }
-
-        public override void shoot()
+        public ControlWasd(ProtoLogic pLogic) : base(pLogic)
         {
-            //return;
-            if (Input.KeyDown(Key.Space) && !_disableSpaceKey)
-            {
-                tank.FireBullet();
-                _disableSpaceKey = true;
-            }
-            else if (Input.KeyUp(Key.Space))
-                _disableSpaceKey = false;
         }
 
         public override void Update()
@@ -33,27 +20,40 @@ namespace tank.Code.Entities.Tank.SpecificDecorations
             base.Update();
             shoot();
             drive();
+            Tank.Logic = new ControlWasd((ProtoLogic) Tank.Logic);
         }
 
-        public override void drive()
+
+        public void shoot()
+        {
+            //return;
+            if (Input.KeyDown(Key.Space) && !_disableSpaceKey)
+            {
+                Tank.FireBullet();
+                _disableSpaceKey = true;
+            }
+            else if (Input.KeyUp(Key.Space))
+                _disableSpaceKey = false;
+        }
+
+        public void drive()
         {
             if (Input.KeyDown(Key.W))
             {
-                tank.move_forward();
+                Tank.move_forward();
             }
             if (Input.KeyDown(Key.A))
             {
-                tank.move_turn_left();
+                Tank.move_turn_left();
             }
             if (Input.KeyDown(Key.S))
             {
-                tank.move_backwards();
+                Tank.move_backwards();
             }
             if (Input.KeyDown(Key.D))
             {
-                tank.move_turn_right();
+                Tank.move_turn_right();
             }
         }
-    
     }
 }
