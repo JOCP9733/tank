@@ -17,7 +17,7 @@ namespace tank.Code.Entities.Tank
     class SimpleTank : Tank
     {
         private float _health = 100;
-        private bool _disableSpaceKey;
+
 
         public SimpleTank(float xPos, float yPos) : base()
         {
@@ -33,42 +33,13 @@ namespace tank.Code.Entities.Tank
         }
 
         /// <summary>
-        ///  Method which is necessary to implement simple shooting
+        /// modified to do nothing so the decorators have to do everything, but the simpletank does not fuck shit up
         /// </summary>
-        public override void shoot()
-        {
-            //return;
-            if (Input.KeyDown(Key.Space) && !_disableSpaceKey)
-            {
-                FireBullet();
-                _disableSpaceKey = true;
-            }
-            else if (Input.KeyUp(Key.Space))
-                _disableSpaceKey = false;
-        }
+        public override void drive(){}
 
         /// <summary>
-        /// Method which is necessary to implement simple driving
+        /// modified to do nothing so the decorators have to do everything, but the simpletank does not fuck shit up
         /// </summary>
-        public override void drive()
-        {
-            if (Input.KeyDown(Key.W))
-            {
-                move_forward();
-            }
-            if (Input.KeyDown(Key.A))
-            {
-                move_turn_left();
-            }
-            if (Input.KeyDown(Key.S))
-            {
-                move_backwards();
-            }
-            if (Input.KeyDown(Key.D))
-            {
-                move_turn_right();
-            }
-        }
-
+        public override void shoot(){}
     }
 }

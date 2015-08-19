@@ -39,8 +39,6 @@ namespace tank.Code.Entities.Tank
             drive();
             shoot();
 
-            Console.WriteLine(Input.ButtonPressed(0));
-            
             //update direction vector for easy shooting
             Direction.X = (float)Math.Sin(Graphic.Angle * Util.DEG_TO_RAD) * _speed;
             Direction.Y = (float)Math.Cos(Graphic.Angle * Util.DEG_TO_RAD) * _speed;
@@ -59,33 +57,40 @@ namespace tank.Code.Entities.Tank
 
         /// <summary>
         /// moves the tank forward
+        /// <param name="factor">had to add a factor for the joystick. if not given, full speed is used.</param>
         /// </summary>
-        public virtual void move_forward()
+        public virtual void move_forward(float factor = 1f)
         {
-            X -= (float)Math.Sin(_image.Angle * Util.DEG_TO_RAD) * _speed;
-            Y -= (float)Math.Cos(_image.Angle * Util.DEG_TO_RAD) * _speed;
+            X -= (float)Math.Sin(_image.Angle * Util.DEG_TO_RAD) * _speed * factor;
+            Y -= (float)Math.Cos(_image.Angle * Util.DEG_TO_RAD) * _speed * factor;
         }
+
         /// <summary>
         /// turns the Tank right
         /// </summary>
-        public virtual void move_turn_left()
+        /// <param name="factor">had to add a factor for the joystick. if not given, full speed is used.</param>
+        public virtual void move_turn_left(float factor = 1f)
         {
-            _image.Angle = _image.Angle + _rotationspeed;
+            _image.Angle = _image.Angle + _rotationspeed * factor;
         }
+
         /// <summary>
         /// turns the tank left
         /// </summary>
-        public virtual void move_turn_right()
+        /// <param name="factor">had to add a factor for the joystick. if not given, full speed is used.</param>
+        public virtual void move_turn_right(float factor = 1f)
         {
-            _image.Angle = _image.Angle - _rotationspeed;
+            _image.Angle = _image.Angle - _rotationspeed * factor;
         }
+
         /// <summary>
         /// moves the tank backwards
         /// </summary>
-        public virtual void move_backwards()
+        /// <param name="factor">had to add a factor for the joystick. if not given, full speed is used.</param>
+        public virtual void move_backwards(float factor = 1f)
         {
-            X += (float)Math.Sin(_image.Angle * Util.DEG_TO_RAD) * _speed;
-            Y += (float)Math.Cos(_image.Angle * Util.DEG_TO_RAD) * _speed;
+            X += (float)Math.Sin(_image.Angle * Util.DEG_TO_RAD) * _speed * factor;
+            Y += (float)Math.Cos(_image.Angle * Util.DEG_TO_RAD) * _speed * factor;
         }
     }
 }

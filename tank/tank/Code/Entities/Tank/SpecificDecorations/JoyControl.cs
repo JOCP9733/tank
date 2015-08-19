@@ -10,7 +10,7 @@ namespace tank.Code.Entities.Tank.SpecificDecorations
 
     class JoyControl: TankDecorator
     {
-        private float _xFactor = 1, _yFactor = 1;
+        private float _xFactor, _yFactor;
 
         public JoyControl(Tank t): base(t) {
             tank = t;
@@ -31,40 +31,24 @@ namespace tank.Code.Entities.Tank.SpecificDecorations
             drive();
         }
 
-        /// <summary>
-        /// override all move functions to enable speed control by joystick
-        /// </summary>
-        public override void move_backwards()
-        {
-            base.move_backwards();
-            X += (float)Math.Sin(_image.Angle * Util.DEG_TO_RAD) * _speed * _xFactor;
-            Y += (float)Math.Cos(_image.Angle * Util.DEG_TO_RAD) * _speed * _yFactor;
-        }
-
         public override void drive()
         {
-            //Console.WriteLine("Arrowcontroll drive");
-            Console.WriteLine(Input.GetAxis(JoyAxis.X, 0) / 100f);
-            Console.WriteLine(Input.GetAxis(JoyAxis.Y, 0) / 100f);
+            //calc a factor from joystick axis position
+            _xFactor = Input.GetAxis(JoyAxis.X)/100f;
+            _yFactor = Input.GetAxis(JoyAxis.Y)/100f;
 
-            _xFactor = Input.GetAxis(JoyAxis.X, 0)/100f;
-            _yFactor = Input.GetAxis(JoyAxis.Y, 0)/100f;
-
+            //check whether to drive forward or backward, and dont send an event if joystick is resting
             if (Math.Abs(_xFactor) > 0.01f)
-            {
                 if (_xFactor < 0)
-                    tank.move_turn_left();
+                    tank.move_turn_left(-_xFactor);
                 else
-                    tank.move_turn_right();
-            }
+                    tank.move_turn_right(_xFactor);
 
             if (Math.Abs(_yFactor) > 0.01f)
-            {
                 if (_yFactor > 0)
-                    tank.move_backwards();
+                    tank.move_backwards(_yFactor);
                 else
-                    tank.move_forward();
-            }
+                    tank.move_forward(-_yFactor);
         }
     
     }

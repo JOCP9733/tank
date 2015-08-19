@@ -17,7 +17,7 @@ namespace tank.Code.GameMode.TestingMode
         {
             Scene = new Scene();
             Scene.Add((new JoyControl(new SimpleTank(50, 50))));
-            //Scene.Add((new SimpleTank(50, 50)));
+            Scene.Add(new WasdControl(new SimpleTank(150, 150)));
         }
     }    
 }
