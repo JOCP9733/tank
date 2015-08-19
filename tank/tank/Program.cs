@@ -12,7 +12,7 @@ namespace tank
     {
         static void Main(string[] args)
         {
-            Game game = new Game("tank");
+            Game game = new Game("tank",1280,720);
             game.Color = Color.White;
 
             GeneralGameScene generalScene = new GeneralGameScene();
