@@ -10,17 +10,25 @@ using tank.Code.Entities.Tank.Logics.Decorators;
 
 namespace tank.Code.GameMode.TestingMode
 {
-    class GeneralGameScene
+    class TestingMode : GameMode
     {
-        public Scene Scene;
         Tank tank = new Tank(50, 50);
         Tank tank2 = new Tank(100, 50);
 
-        public GeneralGameScene()
+        public TestingMode()
         {
-            Scene = new Scene();
             Scene.Add(tank);
             Scene.Add(tank2);
+
+            //try to load a project
+            OgmoProject proj = new OgmoProject("Resources/Maps/test.oep");
+
+            //uuh this somehow "registers a collision tag"
+            proj.RegisterTag((int)CollidableTags.Wall, "Wall");
+
+            //try to load a level into "Scene"
+            proj.LoadLevel("Resources/Maps/testlevel.oel", Scene);
+
             Scene.OnBegin = initialise;
         }
 

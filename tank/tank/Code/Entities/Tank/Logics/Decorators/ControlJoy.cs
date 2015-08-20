@@ -19,12 +19,12 @@ namespace tank.Code.Entities.Tank.Logics.Decorators
         public override void Update()
         {
             base.Update();
-            shoot();
-            drive();
+            Shoot();
+            Drive();
         }
 
 
-        public void shoot()
+        public void Shoot()
         {
             if (Input.ButtonPressed(0) && !_disableButtonZero)
             {
@@ -35,7 +35,7 @@ namespace tank.Code.Entities.Tank.Logics.Decorators
                 _disableButtonZero = false;
         }
 
-        public void drive()
+        public void Drive()
         {
             //calc a factor from joystick axis position
             _xFactor = Input.GetAxis(JoyAxis.X) / 100f;

@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Lidgren.Network, Version=2012.1.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\Lidgren.Network.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,8 +47,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Code\Entities\Tank\Logics\Decorators\ControlNetwork.cs" />
     <Compile Include="Code\Entities\Tank\Logics\Decorators\ControlJoy.cs" />
     <Compile Include="Code\Entities\Tank\Logics\Decorators\ControlSimpleKI.cs" />
+    <Compile Include="Code\Entities\Tank\Logics\Decorators\WallCollider.cs" />
     <Compile Include="Code\Entities\Tank\Logics\Decorators\GetDamage.cs" />
     <Compile Include="Code\Entities\Tank\Logics\Decorators\ControlArrow.cs" />
     <Compile Include="Code\Entities\Tank\Logics\Decorators\ControlWasd.cs" />
@@ -54,7 +60,9 @@
     <Compile Include="Code\Entities\Tank\Logics\LogicDecorator.cs" />
     <Compile Include="Code\Entities\Tank\Tank.cs" />
     <Compile Include="Code\Entities\Weapons\Bullet.cs" />
-    <Compile Include="Code\GameMode\TestingMode\GeneralGameScene.cs" />
+    <Compile Include="Code\GameMode\GameMode.cs" />
+    <Compile Include="Code\GameMode\NetworkMultiplayer\NetworkScene.cs" />
+    <Compile Include="Code\GameMode\TestingMode\TestingMode.cs" />
     <Compile Include="Code\Utilities.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -63,6 +71,12 @@
     <None Include="App.config" />
     <None Include="ClassDiagram1.cd" />
     <None Include="ClassDiagram2.cd" />
+    <None Include="Resources\Maps\test.oep">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Maps\testlevel.oel">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\kylepulver-otter-576ca2e251d4\Otter\Otter.csproj">
@@ -75,6 +89,7 @@
     <Folder Include="Code\Menu\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Lidgren.Network.dll" />
     <Content Include="Resources\Bullet.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
