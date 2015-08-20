@@ -27,6 +27,9 @@ namespace tank.Code.Entities.Tank
         protected float _rotationspeed = 2;
         public Vector2 Direction = new Vector2(0f, 1f);
 
+        public bool WallCollision;
+        public Direction WallCollisionDirection, MovementDirection;
+
         public Tank(float xPos, float yPos) : base()
         {
             Console.WriteLine("simpleTank");
@@ -54,7 +57,6 @@ namespace tank.Code.Entities.Tank
             if(Game == null)
                 throw new ArgumentNullException("emtpy game");
 
-           // ProtoLogic protoLogic = (ProtoLogic) Logic;
             switch (deco)
             {
                 case Decorators.ControlArrow:
@@ -75,6 +77,9 @@ namespace tank.Code.Entities.Tank
                 case Decorators.SpeedUp:
                     Logic = new SpeedUp(Logic);
                     break;
+                case Decorators.WallCollider:
+                    Logic = new WallCollider(Logic);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(deco), deco, null);
             }
@@ -88,6 +93,12 @@ namespace tank.Code.Entities.Tank
             //update direction vector for easy shooting
             Direction.X = (float)Math.Sin(Graphic.Angle * Util.DEG_TO_RAD) * _speed;
             Direction.Y = (float)Math.Cos(Graphic.Angle * Util.DEG_TO_RAD) * _speed;
+
+            //update the enum containing the current direction
+            if (Math.Abs(Direction.X) > Math.Abs(Direction.Y))
+                MovementDirection = Direction.X > 0 ? Code.Direction.Left : Code.Direction.Right;
+            else
+                MovementDirection = Direction.Y > 0 ? Code.Direction.Top : Code.Direction.Bottom;
         }
 
         /// <summary>
@@ -96,6 +107,9 @@ namespace tank.Code.Entities.Tank
         /// </summary>
         public virtual void move_forward(float factor = 1f)
         {
+            //deny if an obstacle is in front of the tank
+            if (WallCollision && WallCollisionDirection == MovementDirection)
+                return;
             X -= (float)Math.Sin(_image.Angle * Util.DEG_TO_RAD) * _speed * factor;
             Y -= (float)Math.Cos(_image.Angle * Util.DEG_TO_RAD) * _speed * factor;
         }
@@ -124,6 +138,9 @@ namespace tank.Code.Entities.Tank
         /// <param name="factor">had to add a factor for the joystick. if not given, full speed is used.</param>
         public virtual void move_backwards(float factor = 1f)
         {
+            //deny if an obstacle is behind the tank
+            //if (WallCollision && WallCollisionDirection == MovementDirection)
+            //    return;
             X += (float)Math.Sin(_image.Angle * Util.DEG_TO_RAD) * _speed * factor;
             Y += (float)Math.Cos(_image.Angle * Util.DEG_TO_RAD) * _speed * factor;
         }

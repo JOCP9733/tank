@@ -37,6 +37,13 @@ namespace tank.Code
         }
     }
 
+    enum Direction
+    {
+        Left,
+        Right,
+        Top,
+        Bottom
+    }
     enum CollidableTags
     {
         Bullet,
@@ -51,7 +58,8 @@ namespace tank.Code
         ControlWasd,
         ControlSimpleKi,
         SpeedUp,
-        GetDamage
+        GetDamage,
+        WallCollider
     }
 
     enum GameModes

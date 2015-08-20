@@ -24,7 +24,7 @@ namespace tank.Code.GameMode.TestingMode
             OgmoProject proj = new OgmoProject("Resources/Maps/test.oep");
 
             //uuh this somehow "registers a collision tag"
-            proj.RegisterTag((int)CollidableTags.Wall, "Wall");
+            proj.RegisterTag(CollidableTags.Wall, "CollisionLayer");
 
             //try to load a level into "Scene"
             proj.LoadLevel("Resources/Maps/testlevel.oel", Scene);
@@ -36,6 +36,7 @@ namespace tank.Code.GameMode.TestingMode
         {
             tank.AddDecorator(Decorators.ControlJoy);
             tank.AddDecorator(Decorators.GetDamage);
+            tank.AddDecorator(Decorators.WallCollider);
 
             tank2.AddDecorator(Decorators.GetDamage);
             tank2.AddDecorator(Decorators.ControlSimpleKi);
