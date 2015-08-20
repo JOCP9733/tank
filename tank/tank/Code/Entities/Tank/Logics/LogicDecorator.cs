@@ -7,20 +7,19 @@ using Otter;
 
 namespace tank.Code.Entities.Tank.Logics
 {
-    class LogicDecorator : ILogic
+    class LogicDecorator : ITankLogic
     {
-        protected ILogic Logic;
+        protected ITankLogic Logic;
 
         protected Game Game;
         protected Scene Scene;
         protected Input Input;
         protected Tank Tank;
 
-
-        public LogicDecorator(ILogic pLogic)
+        public LogicDecorator(ITankLogic pLogic)
         {
             Logic = pLogic;
-            ILogic start = Logic.getUpperMost();
+            ITankLogic start = Logic.getUpperMost();
             Game = ((ProtoLogic)start).Game;
             Scene = ((ProtoLogic)start).Scene;
             Input = ((ProtoLogic)start).Input;
@@ -36,7 +35,7 @@ namespace tank.Code.Entities.Tank.Logics
         {
             Logic.Render();
         }
-        public virtual ILogic getUpperMost()
+        public virtual ITankLogic getUpperMost()
         {
             return Logic.getUpperMost();
         }

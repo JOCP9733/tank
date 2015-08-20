@@ -7,7 +7,7 @@ using Otter;
 
 namespace tank.Code.Entities.Tank.Logics
 {
-    class ProtoLogic : ILogic
+    class ProtoLogic : ITankLogic
     {
         public Game Game;
         public Scene Scene;
@@ -24,13 +24,12 @@ namespace tank.Code.Entities.Tank.Logics
 
         public void Update()
         {
-            
         }
 
         public void Render()
         {
         }
-        public ILogic getUpperMost()
+        public ITankLogic getUpperMost()
         {
             return this;
         }

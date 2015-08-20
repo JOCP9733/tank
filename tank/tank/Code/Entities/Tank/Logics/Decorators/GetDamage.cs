@@ -10,7 +10,7 @@ namespace tank.Code.Entities.Tank.Logics.Decorators
     class GetDamage : LogicDecorator
     {
         private readonly Polygon _basePolygon;
-        public GetDamage(ILogic pLogic) : base(pLogic)
+        public GetDamage(ITankLogic pLogic) : base(pLogic)
         {
             _basePolygon = new Polygon(0,0, 50,0, 50,50, 0,50);
             Tank.AddCollider(new PolygonCollider(_basePolygon, CollidableTags.Tank));

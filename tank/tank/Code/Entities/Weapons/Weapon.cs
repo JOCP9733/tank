@@ -22,30 +22,41 @@ namespace tank.Code.Entities.Weapons
             _originTank = t;
         }
 
+        /// <summary>
+        /// Add a decorator to all following projectiles
+        /// </summary>
+        /// <param name="k"></param>
         public void addDecorator(ProjectileDecorators k)
         {
             ProjectileKind.Add(k);
         }
-        public IProjectile getProjectile(float x, float y, float degOrientation)
+
+        public Projectile getProjectile(float x, float y, float degOrientation)
         {
-            IProjectile tmp = new ProtoProjectile(x, y, degOrientation, _originTank,this);
+            //get a new projectile
+            Projectile p = new Projectile(x, y, _originTank);
+
+            //create logic for the projectile
+            IProjectileLogic tmp = new ProtoProjectile(_originTank.Game, p);
+
             foreach(ProjectileDecorators a in ProjectileKind)
             {
                 decorate(a, tmp);
             }
-            return tmp;
+
+            p.Logic = tmp;
+            return p;
         }
 
-        private IProjectile decorate(ProjectileDecorators k, IProjectile basic)
+        private IProjectileLogic decorate(ProjectileDecorators decoType, IProjectileLogic inner)
         {
-            switch (k)
+            switch (decoType)
             {
                 case ProjectileDecorators.TestBullet:
-                    return new TestBullet(basic);              
+                    return new TestBullet(inner);              
                 default:
                     throw new NotImplementedException();
             }
         }
-
     }
 }

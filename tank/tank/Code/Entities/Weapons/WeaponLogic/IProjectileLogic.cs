@@ -9,10 +9,10 @@ namespace tank.Code.Entities.Weapons.WeaponLogic
     /// <summary>
     /// Interface for Projectiles
     /// </summary>
-    interface IProjectile
+    interface IProjectileLogic
     {
         void Render();
         void Update();
-        IProjectile getUpperMost();
+        IProjectileLogic getUpperMost();
     }
 }

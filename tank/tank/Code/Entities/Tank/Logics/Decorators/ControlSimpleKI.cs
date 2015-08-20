@@ -8,7 +8,7 @@ namespace tank.Code.Entities.Tank.Logics.Decorators
 {
     class ControlSimpleKI : LogicDecorator
     {
-        public ControlSimpleKI(ILogic pLogic) : base(pLogic)
+        public ControlSimpleKI(ITankLogic pLogic) : base(pLogic)
         {
         }
 

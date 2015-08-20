@@ -4,38 +4,43 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using tank.Code.Entities.Tank.Logics;
 
 namespace tank.Code.Entities.Weapons.WeaponLogic
 {
-    class ProjectileDecorator : IProjectile
+    class ProjectileDecorator : IProjectileLogic
     {
-        public Vector2 _direction;
-        public readonly Tank.Tank _originTank;
-        public readonly float _degOrientation;
-        public Weapon _weapon;
+        protected IProjectileLogic ProjectileLogic;
 
-        IProjectile Projectile;
-        public ProjectileDecorator(IProjectile p)
+        protected Game Game;
+        protected Scene Scene;
+        protected Input Input;
+        protected Projectile Projectile;
+
+        public ProjectileDecorator(IProjectileLogic p)
         {
-            Projectile = p;
-            ProtoProjectile tmp = (ProtoProjectile)p.getUpperMost();
-            _originTank = tmp.Weapon._originTank;
-            _degOrientation = tmp._degOrientation;
-            _weapon = tmp.Weapon;
+            ProjectileLogic = p;
+            ProtoProjectile tmp = (ProtoProjectile) ProjectileLogic.getUpperMost();
+
+            Game = tmp.Game;
+            Scene = tmp.Scene;
+            Input = tmp.Input;
+            Projectile = tmp.Projectile;
         }
-        public IProjectile getUpperMost()
+
+        public IProjectileLogic getUpperMost()
         {
-            return Projectile.getUpperMost();
+            return ProjectileLogic.getUpperMost();
         }
 
         public virtual void Render()
         {
-            Projectile.Render();
+            ProjectileLogic.Render();
         }
 
         public virtual void Update()
         {
-            Projectile.Update();
+            ProjectileLogic.Update();
         }
     }
 }

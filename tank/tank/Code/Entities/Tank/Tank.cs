@@ -19,8 +19,10 @@ namespace tank.Code.Entities.Tank
     class Tank : Entity
     {
         private float _health = 100;
-        public ILogic Logic;
+        public ITankLogic Logic;
         public Weapon Weapon;
+
+        public float Rotation => _image.Angle;
 
         protected Image _image;
         public float _speed = 4;
@@ -30,12 +32,10 @@ namespace tank.Code.Entities.Tank
         public bool WallCollision;
         public Direction WallCollisionDirection, MovementDirection;
 
-        public Tank(float xPos, float yPos) : base()
+        public Tank(float xPos, float yPos) : base(xPos, yPos)
         {
             Console.WriteLine("simpleTank");
             _image = new Image("Resources/tank.png");
-            X = xPos;
-            Y = yPos;
             _image.CenterOrigin();
             AddGraphic(_image);
         }
@@ -152,7 +152,8 @@ namespace tank.Code.Entities.Tank
         /// </summary>
         public virtual void FireBullet()
         {
-            Scene.Add(new Bullet(X, Y, _image.Angle, this));
+            Scene.Add(Weapon.getProjectile(X, Y, Rotation));
+            //Scene.Add(new Bullet(X, Y, _image.Angle, this));
         }
     }
 }

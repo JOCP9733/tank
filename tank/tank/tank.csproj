@@ -55,14 +55,15 @@
     <Compile Include="Code\Entities\Tank\Logics\Decorators\ControlArrow.cs" />
     <Compile Include="Code\Entities\Tank\Logics\Decorators\ControlWasd.cs" />
     <Compile Include="Code\Entities\Tank\Logics\Decorators\SpeedUp.cs" />
-    <Compile Include="Code\Entities\Tank\Logics\ILogic.cs" />
+    <Compile Include="Code\Entities\Tank\Logics\ITankLogic.cs" />
     <Compile Include="Code\Entities\Tank\Logics\ProtoLogic.cs" />
     <Compile Include="Code\Entities\Tank\Logics\LogicDecorator.cs" />
     <Compile Include="Code\Entities\Tank\Tank.cs" />
+    <Compile Include="Code\Entities\Weapons\Projectile.cs" />
     <Compile Include="Code\Entities\Weapons\WeaponLogic\Decorators\Kinds\Bullet.cs" />
     <Compile Include="Code\Entities\Weapons\Weapon.cs" />
     <Compile Include="Code\Entities\Weapons\WeaponLogic\Decorators\Kinds\TestBullet.cs" />
-    <Compile Include="Code\Entities\Weapons\WeaponLogic\IProjectile.cs" />
+    <Compile Include="Code\Entities\Weapons\WeaponLogic\IProjectileLogic.cs" />
     <Compile Include="Code\Entities\Weapons\WeaponLogic\ProjectileDecorator.cs" />
     <Compile Include="Code\Entities\Weapons\WeaponLogic\ProtoProjectile.cs" />
     <Compile Include="Code\GameMode\GameMode.cs" />

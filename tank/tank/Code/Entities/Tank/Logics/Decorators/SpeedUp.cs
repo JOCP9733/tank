@@ -8,7 +8,7 @@ namespace tank.Code.Entities.Tank.Logics.Decorators
 {
     class SpeedUp : LogicDecorator
     {
-        public SpeedUp(ILogic pLogic) : base(pLogic)
+        public SpeedUp(ITankLogic pLogic) : base(pLogic)
         {
             Tank._speed += 5;
         }

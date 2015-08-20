@@ -11,7 +11,7 @@ namespace tank.Code.Entities.Tank.Logics.Decorators
     {
         private bool _disableSpaceKey;
 
-        public ControlWasd(ILogic pLogic) : base(pLogic)
+        public ControlWasd(ITankLogic pLogic) : base(pLogic)
         {
         }
 

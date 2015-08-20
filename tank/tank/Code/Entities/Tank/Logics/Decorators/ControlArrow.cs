@@ -11,7 +11,7 @@ namespace tank.Code.Entities.Tank.Logics.Decorators
     {
         private bool _disableRControlKey;
 
-        public ControlArrow(ILogic pLogic) : base(pLogic)
+        public ControlArrow(ITankLogic pLogic) : base(pLogic)
         {
         }
 

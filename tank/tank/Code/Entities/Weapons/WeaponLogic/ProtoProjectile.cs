@@ -7,17 +7,22 @@ using System.Threading.Tasks;
 
 namespace tank.Code.Entities.Weapons.WeaponLogic
 {
-    class ProtoProjectile :IProjectile
+    class ProtoProjectile :IProjectileLogic
     {
-        public Weapon Weapon;
-        public float _degOrientation;
-        public ProtoProjectile(float x, float y, float degOrientation, Tank.Tank originTank, Weapon w)
+        public Game Game;
+        public Scene Scene;
+        public Projectile Projectile;
+        public Input Input;
+
+        public ProtoProjectile(Game game, Projectile p)
         {
-            Weapon = w;
-            _degOrientation = degOrientation;
+            Game = game;
+            Scene = game.Scene;
+            Input = Scene.Input;
+            Projectile = p;
         }
 
-        public IProjectile getUpperMost()
+        public IProjectileLogic getUpperMost()
         {
             return this;
         }

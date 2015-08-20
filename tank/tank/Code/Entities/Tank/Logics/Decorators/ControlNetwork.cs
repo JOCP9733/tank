@@ -12,7 +12,7 @@ namespace tank.Code.Entities.Tank.Logics.Decorators
     class ControlNetwork : LogicDecorator
     {
         
-        public ControlNetwork(ILogic pLogic) : base(pLogic)
+        public ControlNetwork(ITankLogic pLogic) : base(pLogic)
         {
             if(Program.GameMode.Mode != GameModes.Network)
                 throw new NotSupportedException("The gamemode must be network multiplayer for this to work!");

@@ -10,7 +10,7 @@ namespace tank.Code.Entities.Tank.Logics.Decorators
 {
     class WallCollider : LogicDecorator
     {
-        public WallCollider(ILogic pLogic) : base(pLogic)
+        public WallCollider(ITankLogic pLogic) : base(pLogic)
         {
         }
 

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace tank.Code.Entities.Tank.Logics
 {
-    interface ILogic
+    interface ITankLogic
     {
         void Update();
         void Render();
-        ILogic getUpperMost();
+        ITankLogic getUpperMost();
     }
 }
