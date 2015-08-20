@@ -38,6 +38,8 @@ namespace tank.Code.Entities.Tank
             _image = new Image("Resources/tank.png");
             _image.CenterOrigin();
             AddGraphic(_image);
+            Weapon = new Weapon(this);
+            Weapon.addDecorator(ProjectileDecorators.TestBullet);
         }
 
         public override void Render()

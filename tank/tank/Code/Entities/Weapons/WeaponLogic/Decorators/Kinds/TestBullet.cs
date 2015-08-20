@@ -27,8 +27,8 @@ namespace tank.Code.Entities.Weapons.WeaponLogic.Decorators.Kinds
             Projectile.AddGraphic(image);
             image.Angle = Projectile.DegOrientation + 90;
 
-            _direction = new Vector2(4 * (float)Math.Sin(Projectile.DegOrientation * Util.DEG_TO_RAD),
-                4 * (float)Math.Cos(Projectile.DegOrientation * Util.DEG_TO_RAD));
+            _direction = new Vector2(16 * ((float)Math.Sin(Projectile.DegOrientation * Util.DEG_TO_RAD)),
+                16 * ((float)Math.Cos(Projectile.DegOrientation * Util.DEG_TO_RAD)));
         }
 
         public override void Render()

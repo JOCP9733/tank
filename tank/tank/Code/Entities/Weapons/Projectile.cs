@@ -23,9 +23,16 @@ namespace tank.Code.Entities.Weapons
             OriginTank = originTank;
         }
 
+        public override void Update()
+        {
+            base.Update();
+            Logic.Update();
+        }
+
         public override void Render()
         {
             base.Render();
+            Logic.Render();
             Collider?.Render();
         }
     }

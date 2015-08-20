@@ -34,7 +34,7 @@ namespace tank.Code.GameMode.TestingMode
 
         private void initialise()
         {
-            tank.AddDecorator(Decorators.ControlWasd);
+            tank.AddDecorator(Decorators.ControlJoy);
             tank.AddDecorator(Decorators.GetDamage);
             tank.AddDecorator(Decorators.WallCollider);
 

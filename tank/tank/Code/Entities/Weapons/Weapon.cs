@@ -9,7 +9,7 @@ using tank.Code.Entities.Weapons.WeaponLogic.Decorators.Kinds;
 
 namespace tank.Code.Entities.Weapons
 {
-    class Weapon : Entity
+    class Weapon
     {
         public static Texture _texture;
         public readonly Tank.Tank _originTank;
@@ -41,7 +41,7 @@ namespace tank.Code.Entities.Weapons
 
             foreach(ProjectileDecorators a in ProjectileKind)
             {
-                decorate(a, tmp);
+                tmp = decorate(a, tmp);
             }
 
             p.Logic = tmp;
