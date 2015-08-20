@@ -59,4 +59,8 @@ namespace tank.Code
         Network,
         Testing
     }
+    enum ProjectileDecorators
+    {
+        TestBullet
+    }
 }
