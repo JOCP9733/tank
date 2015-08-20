@@ -41,8 +41,8 @@ namespace tank.Code
     {
         Left,
         Right,
-        Top,
-        Bottom
+        Up,
+        Down
     }
     enum CollidableTags
     {

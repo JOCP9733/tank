@@ -100,7 +100,7 @@ namespace tank.Code.Entities.Tank
             if (Math.Abs(Direction.X) > Math.Abs(Direction.Y))
                 MovementDirection = Direction.X > 0 ? Code.Direction.Left : Code.Direction.Right;
             else
-                MovementDirection = Direction.Y > 0 ? Code.Direction.Top : Code.Direction.Bottom;
+                MovementDirection = Direction.Y > 0 ? Code.Direction.Up : Code.Direction.Down;
         }
 
         /// <summary>
@@ -110,8 +110,8 @@ namespace tank.Code.Entities.Tank
         public virtual void move_forward(float factor = 1f)
         {
             //deny if an obstacle is in front of the tank
-            if (WallCollision && WallCollisionDirection == MovementDirection)
-                return;
+            //if (WallCollision && WallCollisionDirection == MovementDirection)
+            //    return;
             X -= (float)Math.Sin(_image.Angle * Util.DEG_TO_RAD) * _speed * factor;
             Y -= (float)Math.Cos(_image.Angle * Util.DEG_TO_RAD) * _speed * factor;
         }

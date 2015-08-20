@@ -21,7 +21,8 @@ namespace tank.Code.Entities.Tank.Logics.Decorators
             {
                 Tank.WallCollision = true;
 
-                var collidedWith = Tank.Collider.CollideList(Tank.X, Tank.Y, CollidableTags.Wall).ElementAt(0);
+                var collidedWithList = Tank.Collider.CollideList(Tank.X, Tank.Y, CollidableTags.Wall);
+                GridCollider collidedWith = (GridCollider) collidedWithList[0];
 
                 var playerBottom = Tank.Collider.Bottom;
                 var playerRight = Tank.Collider.Right;
@@ -30,41 +31,51 @@ namespace tank.Code.Entities.Tank.Logics.Decorators
 
                 var tileBottom = collidedWith.Bottom;
                 var tileRight = collidedWith.Right;
-                var tileLeft = collidedWith.Left;
-                var tileTop = collidedWith.Top;
+                //collidedWith.Left is 0 for whatever reason
+                var tileLeft = collidedWith.Right - collidedWith.Width;
+                var tileTop = collidedWith.Bottom - collidedWith.Height;
 
-                var bCollision = tileBottom - playerTop;
-                var tCollision = playerBottom - tileTop;
-                var lCollision = playerRight - tileLeft;
-                var rCollision = tileRight - playerLeft;
+                Direction xDirection, yDirection;
+                xDirection = Tank.Direction.X > 0 ? Direction.Left : Direction.Right;
+                yDirection = Tank.Direction.Y > 0 ? Direction.Up : Direction.Down;
 
-                if (tCollision < bCollision && tCollision < lCollision && tCollision < rCollision)
+                if (Math.Abs(Tank.Direction.X) > Math.Abs(Tank.Direction.Y))
                 {
-                    //Top collision
-                    Tank.WallCollisionDirection = Direction.Top;
+                    if (xDirection == Direction.Right)
+                    {
+                        Console.WriteLine("r");
+                        int tileColumn = collidedWith.GridX(playerRight);
+                        Tank.X = collidedWith.TileWidth*(tileColumn - 1);
+                    }
+                    else
+                    {
+                        Console.WriteLine("l");
+                        int tileColumn = collidedWith.GridX(playerLeft);
+                        Tank.X = collidedWith.TileWidth*(tileColumn) + Tank.Graphic.ScaledWidth;
+                    }
                 }
-                if (bCollision < tCollision && bCollision < lCollision && bCollision < rCollision)
+                else
                 {
-                    //bottom collision
-                    Tank.WallCollisionDirection = Direction.Bottom;
-                }
-                if (lCollision < rCollision && lCollision < tCollision && lCollision < bCollision)
-                {
-                    //Left collision
-                    Tank.WallCollisionDirection = Direction.Left;
-                }
-                if (rCollision < lCollision && rCollision < tCollision && rCollision < bCollision)
-                {
-                    //Right collision
-                    Tank.WallCollisionDirection = Direction.Right;
+                    if (yDirection == Direction.Down)
+                    {
+                        Console.WriteLine("d");
+                        int tileRow = collidedWith.GridY(playerBottom);
+                        Tank.Y = collidedWith.TileHeight * (tileRow) - Tank.Graphic.ScaledHeight;
+                    }
+                    else
+                    {
+                        Console.WriteLine("u");
+                        int tileRow = collidedWith.GridX(playerTop);
+                        Tank.Y = collidedWith.TileHeight * (tileRow);
+                    }
                 }
             }
             else
             {
                 Tank.WallCollision = false;
             }
-
-            Console.WriteLine(Tank.WallCollision);
+            //if(!Tank.WallCollision)
+            //    Console.WriteLine("-");
         }
     }
 }
