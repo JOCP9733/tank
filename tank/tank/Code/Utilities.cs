@@ -43,4 +43,8 @@ namespace tank.Code
         SpeedUp,
         GetDamage
     }
+    enum ProjectileDecorators
+    {
+        TestBullet
+    }
 }

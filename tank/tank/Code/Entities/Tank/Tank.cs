@@ -20,6 +20,7 @@ namespace tank.Code.Entities.Tank
     {
         private float _health = 100;
         public ILogic Logic;
+        public Weapon Weapon;
 
         protected Image _image;
         public float _speed = 4;
