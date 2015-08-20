@@ -65,8 +65,6 @@
     <Compile Include="Code\Entities\Weapons\WeaponLogic\IProjectile.cs" />
     <Compile Include="Code\Entities\Weapons\WeaponLogic\ProjectileDecorator.cs" />
     <Compile Include="Code\Entities\Weapons\WeaponLogic\ProtoProjectile.cs" />
-    <Compile Include="Code\GameMode\TestingMode\GeneralGameScene.cs" />
-    <Compile Include="Code\Entities\Weapons\Bullet.cs" />
     <Compile Include="Code\GameMode\GameMode.cs" />
     <Compile Include="Code\GameMode\NetworkMultiplayer\NetworkScene.cs" />
     <Compile Include="Code\GameMode\TestingMode\TestingMode.cs" />
