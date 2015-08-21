@@ -30,7 +30,6 @@ namespace tank.Code.Entities.Tank
         public Vector2 Direction = new Vector2(0f, 1f);
 
         public bool WallCollision;
-        public Direction WallCollisionDirection, MovementDirection;
 
         public Tank(float xPos, float yPos) : base(xPos, yPos)
         {
@@ -96,12 +95,6 @@ namespace tank.Code.Entities.Tank
             //update direction vector for easy shooting
             Direction.X = (float)Math.Sin(Graphic.Angle * Util.DEG_TO_RAD) * _speed;
             Direction.Y = (float)Math.Cos(Graphic.Angle * Util.DEG_TO_RAD) * _speed;
-
-            //update the enum containing the current direction
-            if (Math.Abs(Direction.X) > Math.Abs(Direction.Y))
-                MovementDirection = Direction.X > 0 ? Code.Direction.Left : Code.Direction.Right;
-            else
-                MovementDirection = Direction.Y > 0 ? Code.Direction.Up : Code.Direction.Down;
         }
 
         /// <summary>

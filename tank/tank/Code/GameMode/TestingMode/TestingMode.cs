@@ -13,12 +13,12 @@ namespace tank.Code.GameMode.TestingMode
     class TestingMode : GameMode
     {
         Tank tank = new Tank(50, 50);
-        //Tank tank2 = new Tank(100, 50);
+        Tank tank2 = new Tank(300, 300);
 
         public TestingMode()
         {
             Scene.Add(tank);
-            //Scene.Add(tank2);
+            Scene.Add(tank2);
 
             //try to load a project
             OgmoProject proj = new OgmoProject("Resources/Maps/test.oep");
@@ -38,9 +38,10 @@ namespace tank.Code.GameMode.TestingMode
             tank.AddDecorator(Decorators.GetDamage);
             tank.AddDecorator(Decorators.WallCollider);
 
-            //tank2.AddDecorator(Decorators.GetDamage);
-            //tank2.AddDecorator(Decorators.ControlSimpleKi);
-            //tank2.AddDecorator(Decorators.SpeedUp);
+            tank2.AddDecorator(Decorators.WallCollider);
+            tank2.AddDecorator(Decorators.GetDamage);
+            tank2.AddDecorator(Decorators.ControlSimpleKi);
+            tank2.AddDecorator(Decorators.SpeedUp);
         }
     }    
 }
