@@ -46,6 +46,7 @@ namespace tank.Code.Entities.Tank
         {
             base.Render();
             Collider?.Render();
+            Logic.Render();
         }
 
         public override void Added()
