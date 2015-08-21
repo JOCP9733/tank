@@ -24,11 +24,8 @@ namespace tank.Code.Entities.Tank.Logics.Decorators
                 //notify the tank
                 Tank.WallCollision = true;
 
-                //get the gridcollider... i dont know how to directly access it since it is somewhere in the ogmo map code
-                var listOfCollidingColliders = Tank.Collider.CollideList(Tank.X, Tank.Y, CollidableTags.Wall);
-
-                //extract our collider from the list
-                GridCollider wallGridCollider = (GridCollider)listOfCollidingColliders[0];
+                //extract the wallCollider from the list of colliders with the tag wallcollider
+                GridCollider wallGridCollider = (GridCollider)Tank.Collider.CollideList(Tank.X, Tank.Y, CollidableTags.Wall)[0];
 
                 //simplify the player edge names
                 var playerBottom = Tank.Collider.Bottom;

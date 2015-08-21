@@ -26,6 +26,7 @@ namespace tank.Code.GameMode.TestingMode
             OgmoProject proj = new OgmoProject("Resources/Maps/test.oep");
 
             //register our function to call for creating entities
+            //this just is a string with the method name, the method itself has to be in the entities (see tank)
             proj.CreationMethodName = _creationMethodName;
 
             //uuh this somehow "registers a collision tag"

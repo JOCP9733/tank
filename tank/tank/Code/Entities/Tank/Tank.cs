@@ -110,10 +110,18 @@ namespace tank.Code.Entities.Tank
             //ok ogmo gives us the position in x and y, and the list of decorators in DecoratorList
             int x = ogmoParameters.Int("x", -1);
             int y = ogmoParameters.Int("y", -1);
+            //this is how you read a string from ogmo
             string decoList = ogmoParameters.GetNamedItem("DecoratorList").Value;
+            //create an instance
             Tank t = new Tank(x, y);
+
+            //add to the scene because the decorators need that
             scene.Add(t);
+
+            //split the decorators; they are seperated by a ":" in the DecoratorList string
             string[] decoArray = decoList.Split(':');
+
+            //add each decorator
             foreach (string decoratorName in decoArray)
             {
                 //parse the name of the decorator to the decorator-enum, and then add to the tank
