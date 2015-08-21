@@ -9,16 +9,14 @@ namespace tank.Code.Entities.Tank.Logics
 {
     class ProtoLogic : ITankLogic
     {
-        public Game Game;
-        public Scene Scene;
-        public Input Input;
+        //make the game reference the tank game so we dont need to have the reference at start anymore
+        public Game Game {get { return Tank.Game; } }
+        public Scene Scene => Tank.Scene;
+        public Input Input => Tank.Input;
         public Tank Tank;
 
-        public ProtoLogic(Game game, Tank tank)
+        public ProtoLogic(Tank tank)
         {
-            Game = game;
-            Scene = game.Scene;
-            Input = Scene.Input;
             Tank = tank;
         }
 

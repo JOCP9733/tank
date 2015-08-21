@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using Otter;
 using tank.Code.Entities.Tank.Logics;
 using tank.Code.Entities.Tank.Logics.Decorators;
@@ -39,6 +41,9 @@ namespace tank.Code.Entities.Tank
             AddGraphic(_image);
             Weapon = new Weapon(this);
             Weapon.addDecorator(ProjectileDecorators.TestBullet);
+
+            //logic can now be instantiated here already
+            Logic = new ProtoLogic(this);
         }
 
         public override void Render()
@@ -51,13 +56,13 @@ namespace tank.Code.Entities.Tank
         public override void Added()
         {
             base.Added();
-            Logic = new ProtoLogic(Game, this);
+            //Logic = new ProtoLogic(this);
         }
 
         public void AddDecorator(Decorators deco)
         {
-            if(Game == null)
-                throw new ArgumentNullException("emtpy game");
+            //if(Game == null)
+            //    throw new ArgumentNullException("emtpy game");
 
             switch (deco)
             {
@@ -95,6 +100,25 @@ namespace tank.Code.Entities.Tank
             //update direction vector for easy shooting
             Direction.X = (float)Math.Sin(Graphic.Angle * Util.DEG_TO_RAD) * _speed;
             Direction.Y = (float)Math.Cos(Graphic.Angle * Util.DEG_TO_RAD) * _speed;
+        }
+
+        /// <summary>
+        /// This function gets called by the ogmo level loader
+        /// </summary>
+        public static void MyCreateEntity(Scene scene, XmlAttributeCollection ogmoParameters)
+        {
+            //ok ogmo gives us the position in x and y, and the list of decorators in DecoratorList
+            int x = ogmoParameters.Int("x", -1);
+            int y = ogmoParameters.Int("y", -1);
+            string decoList = ogmoParameters.GetNamedItem("DecoratorList").Value;
+            Tank t = new Tank(x, y);
+            scene.Add(t);
+            string[] decoArray = decoList.Split(':');
+            foreach (string decoratorName in decoArray)
+            {
+                //parse the name of the decorator to the decorator-enum, and then add to the tank
+                t.AddDecorator((Decorators) Enum.Parse(typeof(Decorators), decoratorName));
+            }
         }
 
         /// <summary>

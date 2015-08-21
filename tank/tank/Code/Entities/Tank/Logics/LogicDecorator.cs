@@ -10,20 +10,18 @@ namespace tank.Code.Entities.Tank.Logics
     class LogicDecorator : ITankLogic
     {
         protected ITankLogic Logic;
+        private ProtoLogic _uppermostLogic;
 
-        protected Game Game;
-        protected Scene Scene;
-        protected Input Input;
+        protected Game Game => _uppermostLogic.Game;
+        protected Scene Scene => _uppermostLogic.Scene;
+        protected Input Input => _uppermostLogic.Input;
         protected Tank Tank;
 
         public LogicDecorator(ITankLogic pLogic)
         {
             Logic = pLogic;
-            ITankLogic start = Logic.getUpperMost();
-            Game = ((ProtoLogic)start).Game;
-            Scene = ((ProtoLogic)start).Scene;
-            Input = ((ProtoLogic)start).Input;
-            Tank = ((ProtoLogic)start).Tank;
+            _uppermostLogic = (ProtoLogic) Logic.getUpperMost();
+            Tank = _uppermostLogic.Tank;
         }
 
         public virtual void Update()
