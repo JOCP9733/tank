@@ -17,65 +17,93 @@ namespace tank.Code.Entities.Tank.Logics.Decorators
         public override void Update()
         {
             base.Update();
+            PolygonCollider tCol = (PolygonCollider)Tank.Collider;
+            Polygon pol = tCol.Polygon;
+            List<Vector2> cornerList = pol.Points;
+
             if (Tank.Collider.Overlap(Tank.X, Tank.Y, CollidableTags.Wall))
             {
                 Tank.WallCollision = true;
 
                 var collidedWithList = Tank.Collider.CollideList(Tank.X, Tank.Y, CollidableTags.Wall);
-                GridCollider collidedWith = (GridCollider) collidedWithList[0];
 
+
+                GridCollider wCol = (GridCollider)collidedWithList[0];
                 var playerBottom = Tank.Collider.Bottom;
                 var playerRight = Tank.Collider.Right;
                 var playerLeft = Tank.Collider.Left;
                 var playerTop = Tank.Collider.Top;
 
-                var tileBottom = collidedWith.Bottom;
-                var tileRight = collidedWith.Right;
-                //collidedWith.Left is 0 for whatever reason
-                var tileLeft = collidedWith.Right - collidedWith.Width;
-                var tileTop = collidedWith.Bottom - collidedWith.Height;
+                //calculate the direction of the collision by checking each edge of the polygon for collision
 
-                Direction xDirection, yDirection;
-                xDirection = Tank.Direction.X > 0 ? Direction.Left : Direction.Right;
-                yDirection = Tank.Direction.Y > 0 ? Direction.Up : Direction.Down;
 
-                if (Math.Abs(Tank.Direction.X) > Math.Abs(Tank.Direction.Y))
+                Direction collisionDirection = Direction.Crap;
+                for (int i = 0; i < cornerList.Count; i++)
                 {
-                    if (xDirection == Direction.Right)
+                    //add tank position because the polygon points are relative
+                    float cornerX = cornerList[i].X + Tank.X - Tank.Graphic.HalfWidth, cornerY = cornerList[i].Y + Tank.Y - Tank.Graphic.HalfHeight;
+                    
+                    if (wCol.GetTileAtPosition(cornerX, cornerY))
                     {
-                        Console.WriteLine("r");
-                        int tileColumn = collidedWith.GridX(playerRight);
-                        Tank.X = collidedWith.TileWidth*(tileColumn - 1);
-                    }
-                    else
-                    {
-                        Console.WriteLine("l");
-                        int tileColumn = collidedWith.GridX(playerLeft);
-                        Tank.X = collidedWith.TileWidth*(tileColumn) + Tank.Graphic.ScaledWidth;
+                        collisionDirection = GetDirection(playerBottom, playerRight, playerLeft, playerTop, cornerX, cornerY);
+                        break;
                     }
                 }
-                else
-                {
-                    if (yDirection == Direction.Down)
-                    {
-                        Console.WriteLine("d");
-                        int tileRow = collidedWith.GridY(playerBottom);
-                        Tank.Y = collidedWith.TileHeight * (tileRow) - Tank.Graphic.ScaledHeight;
-                    }
-                    else
-                    {
-                        Console.WriteLine("u");
-                        int tileRow = collidedWith.GridX(playerTop);
-                        Tank.Y = collidedWith.TileHeight * (tileRow);
-                    }
-                }
+                //must be 4
+
+                /*if (wCol.GetTile((int)cornerList[0].X, (int)cornerList[0].Y))
+                    collisionDirection = GetDirection(playerBottom, playerRight, playerLeft, playerTop, cornerList[0].X + Tank.X, cornerList[0].Y + Tank.Y);
+                else if (wCol.GetTile((int)cornerList[1].X, (int)cornerList[1].Y))
+                    collisionDirection = GetDirection(playerBottom, playerRight, playerLeft, playerTop, cornerList[1].X + Tank.X, cornerList[1].Y + Tank.Y);
+                else if (wCol.GetTile((int)cornerList[2].X, (int)cornerList[2].Y))
+                    collisionDirection = GetDirection(playerBottom, playerRight, playerLeft, playerTop, cornerList[2].X + Tank.X, cornerList[2].Y + Tank.Y);
+                else//if (wCol.GetTile((int)cornerList[3].X, (int)cornerList[3].Y))
+                    collisionDirection = GetDirection(playerBottom, playerRight, playerLeft, playerTop, cornerList[3].X + Tank.X, cornerList[3].Y + Tank.Y);*/
+                Console.WriteLine(collisionDirection);
             }
             else
             {
                 Tank.WallCollision = false;
             }
-            //if(!Tank.WallCollision)
-            //    Console.WriteLine("-");
+            if(!Tank.WallCollision)
+                Console.WriteLine("-");
+        }
+
+        /// <summary>
+        /// basically this finds out what direction the edge at cornerX/cornerY points to by finding the smallest difference between a direction and cornerX/Y
+        /// </summary>
+        private Direction GetDirection(float bottom, float right, float left, float top, float cornerX, float cornerY)
+        {
+            //use absolute values
+            bottom = Math.Abs(bottom);
+            right = Math.Abs(right);
+            left = Math.Abs(left);
+            top = Math.Abs(top);
+            cornerX = Math.Abs(cornerX);
+            cornerY = Math.Abs(cornerY);
+
+            //uuh yeah this made sense once. 
+            //basically because the bottom/right/left/top valus only represent x or y of a corner, so we need to take the one
+            //with the smaller difference to represent the direction
+            var bottomCandidate = Math.Min(Math.Abs(bottom - cornerX), Math.Abs(bottom - cornerY));
+            var rightCandidate = Math.Min(Math.Abs(right - cornerX), Math.Abs(right - cornerY));
+            var leftCandidate = Math.Min(Math.Abs(left - cornerX), Math.Abs(left - cornerY));
+            var topCandidate = Math.Min(Math.Abs(top - cornerX), Math.Abs(top - cornerY));
+
+            if (bottomCandidate < rightCandidate && bottomCandidate < leftCandidate && bottomCandidate < topCandidate)
+                return Direction.Down;
+            if (rightCandidate < bottomCandidate && rightCandidate < leftCandidate && rightCandidate < topCandidate)
+                return Direction.Right;
+            if (leftCandidate < rightCandidate && leftCandidate < bottomCandidate && leftCandidate < topCandidate)
+                return Direction.Left;
+            //if (topCandidate < rightCandidate && topCandidate < leftCandidate && topCandidate < leftCandidate)
+            return Direction.Up;
+        }
+
+        public override void Render()
+        {
+            base.Render();
+            Scene.GetColliders(CollidableTags.Wall)[0].Render();
         }
     }
 }

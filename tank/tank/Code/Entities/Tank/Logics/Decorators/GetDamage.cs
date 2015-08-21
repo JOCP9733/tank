@@ -20,7 +20,7 @@ namespace tank.Code.Entities.Tank.Logics.Decorators
         public override void Update()
         {
             base.Update();
-            Utilities.RotatePolygon(Tank.Graphic.Angle, Tank.Collider, _basePolygon);
+            ((PolygonCollider) Tank.Collider).Rotation = Tank.Graphic.Angle;
         }
 
         public void ReceiveDamage()
