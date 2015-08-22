@@ -41,7 +41,13 @@ namespace tank.Code.Entities.Tank.Logics.Decorators
 
                 //reset out of all rectangles
                 foreach (Rectangle obstacle in collidingRectangles)
-                    Tank.AddPosition(ShortestProjection(obstacle));
+                {
+                    Vector2 projection = ShortestProjection(obstacle);
+                    //something smells fishy: the projection is larger than a complete tile? fuck that.
+                    if(Math.Abs(projection.X) < wallGridCollider.TileWidth && Math.Abs(projection.Y) < wallGridCollider.TileHeight)
+                        Tank.AddPosition(projection);
+                }
+                    
             }
             else
             {
