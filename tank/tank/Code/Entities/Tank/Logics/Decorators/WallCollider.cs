@@ -27,22 +27,19 @@ namespace tank.Code.Entities.Tank.Logics.Decorators
                 //extract the wallCollider from the list of colliders with the tag wallcollider
                 GridCollider wallGridCollider = (GridCollider)Tank.Collider.CollideList(Tank.X, Tank.Y, CollidableTags.Wall)[0];
 
-                //how many tiles are beneath the tank?
-                //the calculation didnt work generously enough, so we just check 3x3 tiles every time
-                int amountOfXTiles = 3;//(int) Math.Round(Math.Round(((PolygonCollider)Tank.Collider).Polygon.Width)/(double)wCol.TileWidth);
-                int amountOfYTiles = 3;//(int) Math.Round(Math.Round(((PolygonCollider)Tank.Collider).Polygon.Height)/(double)wCol.TileHeight);
-
                 //calculate colliding tiles check start position, eg the top-left-most tile the tank could hit
                 int leftmostTile = wallGridCollider.GridX(Tank.Collider.Left);
                 int topmostTile = wallGridCollider.GridY(Tank.Collider.Top);
 
                 //get the collision rectangles
                 List<Rectangle> collidingRectangles = GetCollidingRectangles(wallGridCollider, leftmostTile, topmostTile);
-                Rectangle wallRectangle = collidingRectangles.ElementAt(0);
 
-                //actual collision reset code begins here
-                 
-                Tank.AddPosition(ShortestProjection(wallRectangle));                
+                //filter out identical rectangles created when the tile checker found multiple colliding candidates
+                collidingRectangles = collidingRectangles.Distinct().ToList();
+
+                //reset out of all rectangles
+                foreach (Rectangle obstacle in collidingRectangles)
+                    Tank.AddPosition(ShortestProjection(obstacle));
             }
             else
             {
