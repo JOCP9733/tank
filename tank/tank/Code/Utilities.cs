@@ -49,7 +49,8 @@ namespace tank.Code
     {
         Bullet,
         Tank,
-        Wall
+        Wall,
+        Tester
     }
 
     enum Decorators

@@ -10,8 +10,10 @@ namespace tank.Code.Entities.Tank.Logics.Decorators
 {
     class WallCollider : LogicDecorator
     {
+        private static Entity _testingEntity;
         public WallCollider(ITankLogic pLogic) : base(pLogic)
         {
+            _testingEntity = new Entity(0, 0, null, new BoxCollider(0, 0, CollidableTags.Tester));
         }
 
         public override void Update()
@@ -107,7 +109,13 @@ namespace tank.Code.Entities.Tank.Logics.Decorators
                 for (int y = topStart; y < checkHeight + topStart; y++)
                     //if we found a tile that actually collides, save it to the list
                     if (collider.GetTile(x, y))
-                        collisionList.Add(ExtendCollisionTile(collider, x, y));
+                    {
+                        _testingEntity.Collider.SetPosition(x * collider.TileWidth, y * collider.TileHeight);
+                        _testingEntity.Collider.Width = collider.TileWidth;
+                        _testingEntity.Collider.Height = collider.TileHeight;
+                        if(Tank.Collider.Collide(Tank.X, Tank.Y, _testingEntity) != null)
+                            collisionList.Add(ExtendCollisionTile(collider, x, y));
+                    }
 
             //return
             return collisionList;
