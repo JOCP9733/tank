@@ -27,89 +27,121 @@ namespace tank.Code.Entities.Tank.Logics.Decorators
                 //extract the wallCollider from the list of colliders with the tag wallcollider
                 GridCollider wallGridCollider = (GridCollider)Tank.Collider.CollideList(Tank.X, Tank.Y, CollidableTags.Wall)[0];
 
-                //simplify the player edge names
-                var playerBottom = Tank.Collider.Bottom;
-                var playerTop = Tank.Collider.Top;
-                var playerRight = Tank.Collider.Right;
-                var playerLeft = Tank.Collider.Left;
-
                 //how many tiles are beneath the tank?
                 //the calculation didnt work generously enough, so we just check 3x3 tiles every time
                 int amountOfXTiles = 3;//(int) Math.Round(Math.Round(((PolygonCollider)Tank.Collider).Polygon.Width)/(double)wCol.TileWidth);
                 int amountOfYTiles = 3;//(int) Math.Round(Math.Round(((PolygonCollider)Tank.Collider).Polygon.Height)/(double)wCol.TileHeight);
 
                 //calculate colliding tiles check start position, eg the top-left-most tile the tank could hit
-                int leftmostTile = wallGridCollider.GridX(playerLeft);
-                int topmostTile = wallGridCollider.GridY(playerTop);
+                int leftmostTile = wallGridCollider.GridX(Tank.Collider.Left);
+                int topmostTile = wallGridCollider.GridY(Tank.Collider.Top);
 
-                //prepare space for the tile collision check, init with bad value
-                int resX = -1, resY = -1;
-
-                //check each tile underneath the tank for collision
-                for (int x = leftmostTile; x < amountOfXTiles + leftmostTile; x++)
-                {
-                    for (int y = topmostTile; y < amountOfYTiles + topmostTile; y++)
-                    {
-                        //if we found a tile that actually collides, we can use that
-                        if (wallGridCollider.GetTile(x, y))
-                        {
-                            //save result
-                            resX = x;
-                            resY = y;
-                            //we just need the first one to collide
-                            break;
-                        }
-                    }
-                }
-
-                //because the collision algorithm works with rectangles, but larger obstacles are made up by multiple colliders with ogmo/otter, we have to find out how
-                //big our rectangle actually is:
-                int left = resX, right = resX + 1, top = resY, bottom = resY + 1;
-
-                //go as far in all directions as the tile is collidable
-                while (wallGridCollider.GetTile(left - 1, resY) && left > 1)
-                    left--;
-                while (wallGridCollider.GetTile(right, resY) && right < wallGridCollider.TileColumns)
-                    right++;
-                while (wallGridCollider.GetTile(resX, top - 1) && top > 1)
-                    top--;
-                while (wallGridCollider.GetTile(resX, bottom) && bottom < wallGridCollider.TileRows)
-                    bottom++;
-
-                //create the rectangle the tank collides with
-                Rectangle wallRectangle = new Rectangle(left * wallGridCollider.TileWidth, top * wallGridCollider.TileHeight, (right-left)*wallGridCollider.TileWidth, (bottom - top) * wallGridCollider.TileHeight);
+                //get the collision rectangles
+                List<Rectangle> collidingRectangles = GetCollidingRectangles(wallGridCollider, leftmostTile, topmostTile);
+                Rectangle wallRectangle = collidingRectangles.ElementAt(0);
 
                 //actual collision reset code begins here
                  
-                //idea: find the shortest possible way to reset the tank position.
-
-                //save all collision values "comingfrom"
-                float leftToRight = playerRight - wallRectangle.Left;
-                float rightToLeft = wallRectangle.Right - playerLeft;
-                float topToDown = playerBottom - wallRectangle.Top;
-                float downToTop = wallRectangle.Bottom - playerTop;
-
-                //find out whether we are goind right or left
-                float shorterXProjection = Math.Min(leftToRight, rightToLeft);
-                //find out whether we are going down or up
-                float shorterYProjection = Math.Min(topToDown, downToTop);
-
-                //should we move on the x or the y axis? (eg what would be shorter)
-                if (shorterYProjection > shorterXProjection)
-                {
-                    //reset by the shorter way
-                    Tank.X += leftToRight < rightToLeft ? -leftToRight : rightToLeft;
-                }
-                else
-                {
-                    //reset by the shorter way
-                    Tank.Y += topToDown < downToTop ? -topToDown : downToTop;
-                }
+                Tank.AddPosition(ShortestProjection(wallRectangle));                
             }
             else
             {
                 Tank.WallCollision = false;
             }
+        }
+
+        /// <summary>
+        /// Shortest way to reset the tank into non-offending area
+        /// </summary>
+        /// <param name="obstacle">the rectangle to avoid</param>
+        /// <returns></returns>
+        private Vector2 ShortestProjection(Rectangle obstacle)
+        {
+            //copy the player position to more legible variables
+            var playerBottom = Tank.Collider.Bottom;
+            var playerTop = Tank.Collider.Top;
+            var playerRight = Tank.Collider.Right;
+            var playerLeft = Tank.Collider.Left;
+
+            //calculate values corresponding to collisions in certain directions
+            float leftToRight = playerRight - obstacle.Left;
+            float rightToLeft = obstacle.Right - playerLeft;
+            float topToDown = playerBottom - obstacle.Top;
+            float downToTop = obstacle.Bottom - playerTop;
+
+            //find out whether we are goind right or left
+            float shorterXProjection = Math.Min(leftToRight, rightToLeft);
+            //find out whether we are going down or up
+            float shorterYProjection = Math.Min(topToDown, downToTop);
+
+            Vector2 bestProjection = new Vector2(0, 0);
+
+            //should we move on the startX or the y axis? (eg what would be shorter)
+            //also checks whether wo should move right or left / up or down
+            if (shorterYProjection > shorterXProjection)
+                bestProjection.X = leftToRight < rightToLeft ? -leftToRight : rightToLeft;
+            else
+                bestProjection.Y += topToDown < downToTop ? -topToDown : downToTop;
+
+            //return the projection we calculated
+            return bestProjection;
+        }
+
+
+        /// <summary>
+        /// <para>List of rectangles we collide with.</para>
+        /// <para>This function checks a specified area for collidable tiles to detect the exact position of the obstacle,
+        /// because the gridcollider does not provide such information, and then calls <c>ExtendCollisionTile</c> to detect
+        /// the complete obstacle (as opposed to only the tile we collide with)</para>
+        /// </summary>
+        /// <param name="collider">Collider to use</param>
+        /// <param name="leftStart">left tile to start check at</param>
+        /// <param name="topStart">top tile to start check at</param>
+        /// <param name="checkWidth">how many tiles to check in x</param>
+        /// <param name="checkHeight">how many tiles to check in y</param>
+        /// <returns>List of rectangles we collide with</returns>
+        private List<Rectangle> GetCollidingRectangles(GridCollider collider, int leftStart, int topStart, int checkWidth = 3, int checkHeight = 3)
+        {
+            //create list for collisions
+            List<Rectangle> collisionList = new List<Rectangle>();
+
+            //check each tile underneath the tank for collision
+            for (int x = leftStart; x < checkWidth + leftStart; x++)
+                for (int y = topStart; y < checkHeight + topStart; y++)
+                    //if we found a tile that actually collides, save it to the list
+                    if (collider.GetTile(x, y))
+                        collisionList.Add(ExtendCollisionTile(collider, x, y));
+
+            //return
+            return collisionList;
+        }
+
+        /// <summary>
+        /// This code tries to extend the collision tile to the largest possible rectangle (eg find the complete obstacle), 
+        /// so that following algorithm parts
+        /// can work with these rectangles to easily decide whether to move the offending entity on the x or the y axis.
+        /// </summary>
+        /// <param name="collider">The collider to work with, probably the grid collision collider.</param>
+        /// <param name="startX">int x position of the tile in the grid (!= pixel position)</param>
+        /// <param name="startY">int y position of the tile in the grid (!= pixel position)</param>
+        /// <returns></returns>
+        private Rectangle ExtendCollisionTile(GridCollider collider, int startX, int startY)
+        {
+            //copy the positions into variables that will be changed to calculate the resulting rectangle
+            int left = startX, right = startX + 1, top = startY, bottom = startY + 1;
+
+            //go as far in all directions as the tile is collidable
+            while (collider.GetTile(left - 1, startY) && left > 1)
+                left--;
+            while (collider.GetTile(right, startY) && right < collider.TileColumns)
+                right++;
+            while (collider.GetTile(startX, top - 1) && top > 1)
+                top--;
+            while (collider.GetTile(startX, bottom) && bottom < collider.TileRows)
+                bottom++;
+
+            //create the rectangle the tank collides with
+            return new Rectangle(left * collider.TileWidth, top * collider.TileHeight, (right - left) * collider.TileWidth, (bottom - top) * collider.TileHeight);
         }
     }
 }

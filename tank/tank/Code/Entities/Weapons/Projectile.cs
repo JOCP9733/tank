@@ -13,10 +13,11 @@ namespace tank.Code.Entities.Weapons
         public Vector2 Direction;
         public readonly Tank.Tank OriginTank;
         public readonly float DegOrientation;
+        public bool WallCollision;
+
         public Weapon Weapon;
-
         public IProjectileLogic Logic;
-
+        
         public Projectile(float x, float y, Tank.Tank originTank) : base(x, y)
         {
             DegOrientation = originTank.Rotation;

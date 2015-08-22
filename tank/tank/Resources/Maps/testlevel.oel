@@ -24,6 +24,6 @@
 0000000000000000000000000000000000000000</CollisionLayer>
   <EntityLayer>
     <Tank id="0" x="768" y="256" angle="0" DecoratorList="GetDamage:WallCollider:ControlSimpleKi:SpeedUp" />
-    <Tank id="1" x="768" y="256" angle="0" DecoratorList="GetDamage:WallCollider:ControlJoy" />
+    <Tank id="1" x="768" y="256" angle="0" DecoratorList="GetDamage:WallCollider:ControlWasd" />
   </EntityLayer>
 </level>
