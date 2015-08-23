@@ -41,6 +41,7 @@ namespace tank.Code.Entities.Tank
             AddGraphic(_image);
             Weapon = new Weapon(this);
             Weapon.addDecorator(ProjectileDecorators.TestBullet);
+            Weapon.addDecorator(ProjectileDecorators.BulletWallCollider);
 
             //logic can now be instantiated here already
             Logic = new ProtoLogic(this);

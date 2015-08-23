@@ -53,7 +53,9 @@ namespace tank.Code.Entities.Weapons
             switch (decoType)
             {
                 case ProjectileDecorators.TestBullet:
-                    return new TestBullet(inner);              
+                    return new TestBullet(inner);          
+                case ProjectileDecorators.BulletWallCollider:
+                    return new BulletWallCollider(inner);    
                 default:
                     throw new NotImplementedException();
             }
