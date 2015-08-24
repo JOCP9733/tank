@@ -10,10 +10,8 @@ namespace tank.Code.Entities.Weapons
 {
     class Projectile : Entity
     {
-        public Vector2 Direction;
         public readonly Tank.Tank OriginTank;
         public readonly float DegOrientation;
-        public bool WallCollision;
 
         public Weapon Weapon;
         public IProjectileLogic Logic;
@@ -22,6 +20,7 @@ namespace tank.Code.Entities.Weapons
         {
             DegOrientation = originTank.Rotation;
             OriginTank = originTank;
+            Weapon = originTank.Weapon;
         }
 
         public override void Update()

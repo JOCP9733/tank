@@ -17,39 +17,45 @@ namespace tank.Code.Entities.Tank.Logics.Decorators
             if(Program.GameMode.Mode != GameModes.Network)
                 throw new NotSupportedException("The gamemode must be network multiplayer for this to work!");
 
-            NetworkScene netScene = (NetworkScene) Program.GameMode;
-
-            netScene.OnData += mHandler;
-
+            if(Program.GameMode is NetworkSceneClient)
+                ((NetworkSceneClient) Program.GameMode).OnData += mHandler;
+            else
+                ((NetworkSceneServer)Program.GameMode).OnData += mHandler;
         }
 
-        void mHandler(object source, NetworkScene.NetworkEventArgs n)
+        void mHandler(object source, NetworkEventArgs n)
         {
-            
-        }
-        
-        public void shoot()
-        {
-            Tank.FireBullet();
-        }
-
-        public void drive()
-        {
-            if (Input.KeyDown(Key.Up))
+            if (n.GetInfo() == MessageType.TankControl)
             {
-                Tank.move_forward();
-            }
-            if (Input.KeyDown(Key.Left))
-            {
-                Tank.move_turn_left();
-            }
-            if (Input.KeyDown(Key.Down))
-            {
-                Tank.move_backwards();
-            }
-            if (Input.KeyDown(Key.Right))
-            {
-                Tank.move_turn_right();
+                NetIncomingMessage msg = n.GetData();
+                if (msg.PositionInBytes == 8)
+                    return;
+                NetIncomingMessage s = msg;
+                //only if this tank is actually meant...
+                if (msg.ReadInt32(32) == Tank.NetworkId)
+                {
+                    NetworkAction a = (NetworkAction)msg.ReadInt32(16);
+                    switch (a)
+                    {
+                        case NetworkAction.Left:
+                            Tank.move_turn_left();
+                            break;
+                        case NetworkAction.Right:
+                            Tank.move_turn_right();
+                            break;
+                        case NetworkAction.Forward:
+                            Tank.move_forward();
+                            break;
+                        case NetworkAction.Reward:
+                            Tank.move_backwards();
+                            break;
+                        case NetworkAction.Fire:
+                            Tank.FireBullet();
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+                }
             }
         }
     }

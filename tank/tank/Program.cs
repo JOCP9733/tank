@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Otter;
 using tank.Code.GameMode;
+using tank.Code.GameMode.NetworkMultiplayer;
 using tank.Code.GameMode.TestingMode;
 
 namespace tank
@@ -12,15 +13,18 @@ namespace tank
     class Program
     {
         public static GameMode GameMode;
+        private static Game _game;
 
         static void Main(string[] args)
         {
-            Game game = new Game("tank",1280,720);
-            game.Color = Color.White;
+            _game = new Game("tank",1280,720);
+            _game.Color = Color.White;
 
-            GameMode = new TestingMode();
-
-            game.Start(GameMode.Scene);
+            if(Console.ReadLine() == "s")
+                GameMode = new NetworkSceneServer();
+            else
+                GameMode = new NetworkSceneClient();
+            _game.Start(GameMode.Scene);
         }
     }
 }

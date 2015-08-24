@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Code\Entities\Tank\Logics\Decorators\ControlNetworkHook.cs" />
     <Compile Include="Code\Entities\Tank\Logics\Decorators\ControlNetwork.cs" />
     <Compile Include="Code\Entities\Tank\Logics\Decorators\ControlJoy.cs" />
     <Compile Include="Code\Entities\Tank\Logics\Decorators\ControlSimpleKI.cs" />
@@ -67,8 +68,11 @@
     <Compile Include="Code\Entities\Weapons\WeaponLogic\ProjectileDecorator.cs" />
     <Compile Include="Code\Entities\Weapons\WeaponLogic\ProtoProjectile.cs" />
     <Compile Include="Code\GameMode\GameMode.cs" />
-    <Compile Include="Code\GameMode\NetworkMultiplayer\NetworkScene.cs" />
+    <Compile Include="Code\GameMode\NetworkMultiplayer\NetworkSceneClient.cs" />
+    <Compile Include="Code\GameMode\NetworkMultiplayer\NetworkSceneServerWithClient.cs" />
+    <Compile Include="Code\GameMode\NetworkMultiplayer\NetworkSceneServer.cs" />
     <Compile Include="Code\GameMode\TestingMode\TestingMode.cs" />
+    <Compile Include="Code\NetUtil.cs" />
     <Compile Include="Code\Utilities.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -77,6 +81,9 @@
     <None Include="App.config" />
     <None Include="ClassDiagram1.cd" />
     <None Include="ClassDiagram2.cd" />
+    <None Include="Resources\Maps\networkTestBench.oel">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\Maps\collisionTestBench.oel">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

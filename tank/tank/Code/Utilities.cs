@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Lidgren.Network;
 using Otter;
+using tank.Code.Entities.Tank;
+using tank.Code.GameMode.NetworkMultiplayer;
 
 namespace tank.Code
 {
@@ -151,14 +155,10 @@ namespace tank.Code
         }
     }
 
-    enum Direction
-    {
-        Left,
-        Right,
-        Up,
-        Down,
-        Crap
-    }
+
+
+
+
     enum CollidableTags
     {
         Bullet,
@@ -175,7 +175,9 @@ namespace tank.Code
         ControlSimpleKi,
         SpeedUp,
         GetDamage,
-        WallCollider
+        WallCollider,
+        ControlNetworkHook,
+        ControlNetwork
     }
 
     enum GameModes
@@ -183,9 +185,17 @@ namespace tank.Code
         Network,
         Testing
     }
+
     enum ProjectileDecorators
     {
         TestBullet,
         BulletWallCollider
+    }
+
+    enum Maps
+    {
+        collisionTestBench,
+        testlevel,
+        networkTestBench
     }
 }

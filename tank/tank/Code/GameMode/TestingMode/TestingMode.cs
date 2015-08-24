@@ -34,9 +34,6 @@ namespace tank.Code.GameMode.TestingMode
 
             //try to load a level into "Scene"
             proj.LoadLevel("Resources/Maps/collisionTestBench.oel", Scene);
-
-            //load entities
-            var x = proj.Entities;
         }
     }    
 }

@@ -67,6 +67,11 @@ namespace Otter {
         public Action OnRender = delegate { };
 
         /// <summary>
+        /// An action that triggers after all pending Scene.Add() operations have concluded.
+        /// </summary>
+        public Action OnEmptyEntitiesToAdd = delegate { };
+
+        /// <summary>
         /// An action that triggers during Begin().
         /// </summary>
         public Action OnBegin = delegate { };
@@ -694,6 +699,8 @@ namespace Otter {
                     e.Added();
                     e.OnAdded();
                     e.UpdateComponentLists(); // Add components after e.Added, so that Entity.Scene is not null for components.
+                    //call this action to notify code that needs to run after all entities have loaded
+                    OnEmptyEntitiesToAdd();
                 }
             }
 

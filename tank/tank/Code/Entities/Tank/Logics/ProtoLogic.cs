@@ -27,6 +27,7 @@ namespace tank.Code.Entities.Tank.Logics
         public void Render()
         {
         }
+
         public ITankLogic getUpperMost()
         {
             return this;
