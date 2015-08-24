@@ -26,7 +26,7 @@ namespace tank.Code
         public static void SendMessage(NetPeer peer, MessageType messageType, int data, NetConnection recipient)
         {
             NetOutgoingMessage message = peer.CreateMessage();
-            message.Write((int)messageType, 16);
+            message.Write((byte)messageType);
             message.Write(data, 32);
             peer.SendMessage(message, recipient, NetDeliveryMethod.ReliableUnordered);
         }
@@ -72,6 +72,7 @@ namespace tank.Code
     {
         TankControl,
         PauseControl,
+        LoadFinish,
         WhichTankCanIControl //i have no excuse
     }
 

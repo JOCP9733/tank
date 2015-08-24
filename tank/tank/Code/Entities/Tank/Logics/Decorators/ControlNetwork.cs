@@ -19,8 +19,8 @@ namespace tank.Code.Entities.Tank.Logics.Decorators
 
             if(Program.GameMode is NetworkSceneClient)
                 ((NetworkSceneClient) Program.GameMode).OnData += mHandler;
-            else
-                ((NetworkSceneServer)Program.GameMode).OnData += mHandler;
+            else//access the servers client. have to do this cleaner somehow somewhen
+                (((NetworkSceneServerWithClient)Program.GameMode).ClientScene).OnData += mHandler;
         }
 
         void mHandler(object source, NetworkEventArgs n)
@@ -30,11 +30,10 @@ namespace tank.Code.Entities.Tank.Logics.Decorators
                 NetIncomingMessage msg = n.GetData();
                 if (msg.PositionInBytes == 8)
                     return;
-                NetIncomingMessage s = msg;
                 //only if this tank is actually meant...
                 if (msg.ReadInt32(32) == Tank.NetworkId)
                 {
-                    NetworkAction a = (NetworkAction)msg.ReadInt32(16);
+                    NetworkAction a = (NetworkAction) msg.ReadByte();
                     switch (a)
                     {
                         case NetworkAction.Left:

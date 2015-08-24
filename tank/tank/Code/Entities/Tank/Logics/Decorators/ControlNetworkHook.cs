@@ -14,27 +14,24 @@ namespace tank.Code.Entities.Tank.Logics.Decorators
     /// </summary>
     class ControlNetworkHook : LogicDecorator
     {
-        private NetPeer _peer;
+        private readonly NetClient _client;
 
         public ControlNetworkHook(ITankLogic pLogic) : base(pLogic)
         {
             if(Program.GameMode.Mode != GameModes.Network)
                 throw new NotSupportedException("The gamemode must be network multiplayer for this to work!");
 
-            if (Program.GameMode is NetworkSceneServer)
-                _peer = ((NetworkSceneServer) Program.GameMode).Server;
-            else
-                _peer = ((NetworkSceneClient)Program.GameMode).Client;
+            _client = (NetClient) Program.GameMode.Peer;
         }
 
         private void SendNotification(NetworkAction whatNetworkAction)
         {
             //we need a second peer for this to send a message to the server itself
-            NetOutgoingMessage message = _peer.CreateMessage();
-            message.Write((int) MessageType.TankControl, 16);
+            NetOutgoingMessage message = _client.CreateMessage();
+            message.Write((byte) MessageType.TankControl);
             message.Write(Tank.NetworkId, 32);
-            message.Write((int)whatNetworkAction, 16);
-            _peer.SendMessage(message, _peer.Connections, NetDeliveryMethod.ReliableUnordered, 0);
+            message.Write((byte)whatNetworkAction);
+            _client.SendMessage(message, _client.ServerConnection, NetDeliveryMethod.ReliableUnordered, 0);
         }
         
         public void OnForward()

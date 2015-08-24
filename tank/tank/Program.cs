@@ -19,9 +19,10 @@ namespace tank
         {
             _game = new Game("tank",1280,720);
             _game.Color = Color.White;
+            _game.MouseVisible = true;
 
             if(Console.ReadLine() == "s")
-                GameMode = new NetworkSceneServer();
+                GameMode = new NetworkSceneServerWithClient(2);
             else
                 GameMode = new NetworkSceneClient();
             _game.Start(GameMode.Scene);

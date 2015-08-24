@@ -70,7 +70,6 @@
     <Compile Include="Code\GameMode\GameMode.cs" />
     <Compile Include="Code\GameMode\NetworkMultiplayer\NetworkSceneClient.cs" />
     <Compile Include="Code\GameMode\NetworkMultiplayer\NetworkSceneServerWithClient.cs" />
-    <Compile Include="Code\GameMode\NetworkMultiplayer\NetworkSceneServer.cs" />
     <Compile Include="Code\GameMode\TestingMode\TestingMode.cs" />
     <Compile Include="Code\NetUtil.cs" />
     <Compile Include="Code\Utilities.cs" />
