@@ -36,6 +36,14 @@ namespace tank.Code
             //return the rotated polygon
             return polygon;
         }
+
+        /// <summary>
+        /// parses a string to an enum
+        /// </summary>
+        public static T ParseEnum<T>(string value)
+        {
+            return (T)Enum.Parse(typeof(T), value, true);
+        }
     }
 
     /// <summary>
@@ -164,7 +172,8 @@ namespace tank.Code
         Bullet,
         Tank,
         Wall,
-        Tester
+        Tester,
+        PowerUp
     }
 
     enum Decorators
@@ -177,7 +186,8 @@ namespace tank.Code
         GetDamage,
         WallCollider,
         ControlNetworkHook,
-        ControlNetwork
+        ControlNetwork,
+        UsePowerUps
     }
 
     enum GameModes
@@ -190,6 +200,11 @@ namespace tank.Code
     {
         TestBullet,
         BulletWallCollider
+    }
+
+    enum PowerUps
+    {
+        SpeedUp
     }
 
     enum Maps

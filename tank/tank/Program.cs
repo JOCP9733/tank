@@ -21,10 +21,12 @@ namespace tank
             _game.Color = Color.White;
             _game.MouseVisible = true;
 
-            if(Console.ReadLine() == "s")
-                GameMode = new NetworkSceneServerWithClient(2);
-            else
-                GameMode = new NetworkSceneClient();
+            //if s, then create a server
+            //uncomment to test network stuff
+            //GameMode = new NetworkSceneClient(Console.ReadLine() == "s");
+
+            GameMode = new TestingMode();
+
             _game.Start(GameMode.Scene);
         }
     }

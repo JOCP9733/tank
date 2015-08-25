@@ -12,8 +12,6 @@ namespace tank.Code.GameMode
     {
         public GameModes Mode;
         public Scene Scene;
-        //network only, but i didnt want to add another subclass
-        public NetPeer Peer;
 
         public GameMode(GameModes mode = GameModes.Testing)
         {

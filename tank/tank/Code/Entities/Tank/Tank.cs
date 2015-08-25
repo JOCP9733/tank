@@ -109,6 +109,9 @@ namespace tank.Code.Entities.Tank
                 case Decorators.ControlNetwork:
                     Logic = new ControlNetwork(Logic);
                     break;
+                case Decorators.UsePowerUps:
+                    Logic = new UsePowerUps(Logic);
+                    break;
                 case Decorators.ControlNetworkHook:
                     NetworkHook = new ControlNetworkHook(Logic);
                     Logic = NetworkHook;

@@ -23,7 +23,8 @@
 0000000000000000000000000000000000000000
 0000000000000000000000000000000000000000</CollisionLayer>
   <EntityLayer>
-    <Tank id="0" x="256" y="288" angle="0" DecoratorList="GetDamage:WallCollider:ControlJoy" />
-    <Tank id="1" x="1120" y="288" angle="0" DecoratorList="GetDamage:WallCollider:ControlSimpleKi" />
+    <Tank id="0" x="256" y="288" angle="0" DecoratorList="GetDamage:WallCollider:ControlJoy:UsePowerUps" />
+    <Tank id="1" x="1120" y="288" angle="0" DecoratorList="GetDamage:WallCollider:ControlSimpleKi:UsePowerUps" />
+    <PowerUp id="2" x="640" y="256" Type="SpeedUp" />
   </EntityLayer>
 </level>

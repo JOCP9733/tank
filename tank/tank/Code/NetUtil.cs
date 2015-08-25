@@ -32,6 +32,184 @@ namespace tank.Code
         }
     }
 
+    class GameServer
+    {
+        /// <summary>
+        /// Lidgren server instance
+        /// </summary>
+        public NetServer Server;
+
+        /// <summary>
+        /// Server data receive event
+        /// </summary>
+        public event NetworkEvent OnServerData;
+
+        /// <summary>
+        /// Map the clients should load
+        /// </summary>
+        private readonly Maps _mapToLoad;
+
+        /// <summary>
+        /// The client count at which to start the game
+        /// </summary>
+        private readonly int _targetClientCount;
+
+        /// <summary>
+        /// How many clients have yet loaded the map (and thus the entities)
+        /// </summary>
+        private int _loadedClients;
+
+        public GameServer(int targetClientCount = 2, Maps mapToLoad = Maps.networkTestBench)
+        {
+            //what map should be loaded?
+            _mapToLoad = mapToLoad;
+
+            //for how many clients should we wait?
+            _targetClientCount = targetClientCount;
+
+            //in game update so we can pause the scene without problems
+            Game.Instance.OnUpdate += ReadNetwork;
+
+            //console info
+            Console.WriteLine("server");
+
+            //server config
+            NetPeerConfiguration config = new NetPeerConfiguration("tank");
+            config.Port = 14242;
+
+            //start the server
+            Server = new NetServer(config);
+            Server.Start();
+
+            OnServerData += ServerOnDataHandler;
+        }
+
+        /// <summary>
+        /// Handler the server registers to react to network messages
+        /// </summary>
+        void ServerOnDataHandler(object source, NetworkEventArgs n)
+        {
+            NetIncomingMessage msg = n.GetData();
+            MessageType msgType = n.GetInfo();
+            if (msgType == MessageType.LoadFinish)
+            {
+                //just ignore the message content for now
+                _loadedClients++;
+                if (_loadedClients == _targetClientCount)
+                    OnAllLoaded();
+            }
+            else if (msgType == MessageType.TankControl)
+            {
+                //read from old message
+                int networkId = msg.ReadInt32(32);
+                NetworkAction networkAction = (NetworkAction)msg.ReadByte();
+
+                //write to new message
+                NetOutgoingMessage relayMessage = Server.CreateMessage(n.GetData().LengthBits);
+                relayMessage.Write((byte)MessageType.TankControl);
+                relayMessage.Write(networkId, 32);
+                relayMessage.Write((byte)networkAction);
+                Server.SendToAll(relayMessage, NetDeliveryMethod.ReliableUnordered);
+            }
+        }
+
+        /// <summary>
+        /// Called when all clients have sent their load finish signal
+        /// </summary>
+        private void OnAllLoaded()
+        {
+            //tell each client which tank is "theirs"
+            for (int i = 0; i < _loadedClients; i++)
+                NetUtil.SendMessage(Server, MessageType.WhichTankCanIControl, i, i);
+            //the clients can now unpause the scene
+            SendPauseCommand(MessageType.PauseControl, PauseControl.Play);
+
+
+        }
+
+        /// <summary>
+        /// Called whenever a client connects
+        /// </summary>
+        private void OnConnect()
+        {
+            SendPauseCommand(MessageType.PauseControl, PauseControl.Pause);
+        }
+
+        /// <summary>
+        /// Helper function to control pause for each client
+        /// </summary>
+        private void SendPauseCommand(MessageType messageType, PauseControl data)
+        {
+            NetOutgoingMessage message = Server.CreateMessage();
+            message.Write((byte)messageType);
+            message.Write((byte)data);
+            Server.SendToAll(message, NetDeliveryMethod.ReliableUnordered);
+        }
+
+        /// <summary>
+        /// Helper to send data to all clients
+        /// </summary>
+        private void SendToAll(MessageType messageType, int data)
+        {
+            NetOutgoingMessage message = Server.CreateMessage();
+            message.Write((int)messageType, 16);
+            message.Write(data, 32);
+            Server.SendToAll(message, NetDeliveryMethod.ReliableUnordered);
+        }
+
+        /// <summary>
+        /// Called when a client discovers this server
+        /// </summary>
+        /// <param name="msg"></param>
+        private void OnDiscoveryRequest(NetIncomingMessage msg)
+        {
+            //respond with map to load and server message
+            NetOutgoingMessage response = Server.CreateMessage();
+            response.Write((byte)_mapToLoad);
+            response.Write("tank server. pray that there is only one on the network.");
+
+            // Send the response to the sender of the request
+            Server.SendDiscoveryResponse(response, msg.SenderEndPoint);
+        }
+
+        /// <summary>
+        /// Method is called on each update to check for new messages
+        /// </summary>
+        private void ReadNetwork()
+        {
+            NetIncomingMessage msg;
+            while ((msg = Server.ReadMessage()) != null)
+            {
+                switch (msg.MessageType)
+                {
+                    case NetIncomingMessageType.DiscoveryRequest:
+                        OnDiscoveryRequest(msg);
+                        break;
+                    case NetIncomingMessageType.StatusChanged:
+                        if ((NetConnectionStatus)msg.ReadByte() == NetConnectionStatus.RespondedConnect)
+                            OnConnect();
+                        break;
+                    case NetIncomingMessageType.VerboseDebugMessage:
+                    case NetIncomingMessageType.DebugMessage:
+                    case NetIncomingMessageType.WarningMessage:
+                    case NetIncomingMessageType.ErrorMessage:
+                        Console.WriteLine(msg.ReadString());
+                        break;
+                    case NetIncomingMessageType.Data:
+                        //the first four bytes in each message contain the type
+                        var info = (MessageType)msg.ReadByte();
+                        //notify everyone who wanted to be notified upon message arrival
+                        OnServerData?.Invoke(Server, new NetworkEventArgs(msg, info));
+                        break;
+                    default:
+                        Console.WriteLine("Unhandled type: " + msg.MessageType);
+                        break;
+                }
+                Server.Recycle(msg);
+            }
+        }
+    }
+
     //This is a class which describes the event to the class that recieves it.
     //An EventArgs class must always derive from System.EventArgs.
     class NetworkEventArgs : EventArgs

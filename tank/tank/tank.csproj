@@ -47,10 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Code\Entities\Powerups\PowerUp.cs" />
     <Compile Include="Code\Entities\Tank\Logics\Decorators\ControlNetworkHook.cs" />
     <Compile Include="Code\Entities\Tank\Logics\Decorators\ControlNetwork.cs" />
     <Compile Include="Code\Entities\Tank\Logics\Decorators\ControlJoy.cs" />
     <Compile Include="Code\Entities\Tank\Logics\Decorators\ControlSimpleKI.cs" />
+    <Compile Include="Code\Entities\Tank\Logics\Decorators\UsePowerUps.cs" />
     <Compile Include="Code\Entities\Tank\Logics\Decorators\WallCollider.cs" />
     <Compile Include="Code\Entities\Tank\Logics\Decorators\GetDamage.cs" />
     <Compile Include="Code\Entities\Tank\Logics\Decorators\ControlArrow.cs" />
@@ -69,7 +71,6 @@
     <Compile Include="Code\Entities\Weapons\WeaponLogic\ProtoProjectile.cs" />
     <Compile Include="Code\GameMode\GameMode.cs" />
     <Compile Include="Code\GameMode\NetworkMultiplayer\NetworkSceneClient.cs" />
-    <Compile Include="Code\GameMode\NetworkMultiplayer\NetworkSceneServerWithClient.cs" />
     <Compile Include="Code\GameMode\TestingMode\TestingMode.cs" />
     <Compile Include="Code\NetUtil.cs" />
     <Compile Include="Code\Utilities.cs" />
@@ -107,6 +108,9 @@
   <ItemGroup>
     <Content Include="Lidgren.Network.dll" />
     <Content Include="Resources\Bullet.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Powerups\SpeedUp.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\tank.png">
