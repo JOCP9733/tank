@@ -38,6 +38,14 @@ namespace tank.Code
         }
 
         /// <summary>
+        /// Returns a list of given enum positions
+        /// </summary>
+        public static IEnumerable<T> GetValues<T>()
+        {
+            return (T[]) Enum.GetValues(typeof (T));
+        }
+
+        /// <summary>
         /// parses a string to an enum
         /// </summary>
         public static T ParseEnum<T>(string value)

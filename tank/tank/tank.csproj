@@ -73,6 +73,8 @@
     <Compile Include="Code\GameMode\NetworkMultiplayer\NetworkSceneClient.cs" />
     <Compile Include="Code\GameMode\TestingMode\TestingMode.cs" />
     <Compile Include="Code\NetUtil.cs" />
+    <Compile Include="Code\UI\ListMenu.cs" />
+    <Compile Include="Code\UI\UIManager.cs" />
     <Compile Include="Code\Utilities.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

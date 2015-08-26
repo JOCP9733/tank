@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using Otter;
+using Otter.UI;
 using tank.Code.Entities.Tank;
 using tank.Code.Entities.Tank.Logics;
 using tank.Code.Entities.Tank.Logics.Decorators;

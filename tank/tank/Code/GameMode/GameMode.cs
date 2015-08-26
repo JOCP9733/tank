@@ -18,5 +18,10 @@ namespace tank.Code.GameMode
             Mode = mode;
             Scene = new Scene();
         }
+
+        public static explicit operator GameMode(int v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
