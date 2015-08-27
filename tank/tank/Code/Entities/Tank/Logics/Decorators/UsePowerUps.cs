@@ -24,7 +24,6 @@ namespace tank.Code.Entities.Tank.Logics.Decorators
             if(Tank.Collider == null)
                 throw new InvalidOperationException("to use this decorator, the tank must have the getdamage collider");
             //get all colliding entities
-            Console.WriteLine(Tank.Collider.Overlap(Tank.X, Tank.Y, CollidableTags.PowerUp));
             List<Entity> collisionList = Tank.Collider.CollideEntities(Tank.X, Tank.Y, CollidableTags.PowerUp);
             if (collisionList.Count > 0)
             {
