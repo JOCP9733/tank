@@ -140,8 +140,8 @@ namespace tank.Code.GameMode.NetworkMultiplayer
         private void LoadMap(Maps map)
         {
             //tank entity creation was moved to ogmo; see testlevel.oep for adding a decorator to your tank.
-            //try to load a project
-            OgmoProject proj = new OgmoProject("Resources/Maps/test.oep");
+            //try to load a project, second path is image path. it goes into maps because ogmo instructs to go up a level, so we end up in resources
+            OgmoProject proj = new OgmoProject("Resources/Maps/test.oep", "Resources/Maps/");
 
             //register our function to call for creating entities
             //this just is a string with the method name, the method itself has to be in the entities (see tank)
