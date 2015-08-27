@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,10 +29,10 @@ namespace tank
             //
 
             //show a menu
-            UIManager uiManager = new UIManager();
+            UiManager uiManager = new UiManager();
             //ui manager needs fully qualified path to the enum
-            uiManager.CreateListMenu("tank.Code.GameModes", OnSelectionCallback);
-            _game.Start(uiManager);
+            uiManager.ShowListMenu("gamemode?", "tank.Code.GameModes", OnSelectionCallback);
+            _game.Start(uiManager.Scene);
         }
 
         private static void OnSelectionCallback(int selection)
@@ -41,14 +42,20 @@ namespace tank
             switch (mode)
             {
                 case GameModes.Network:
-                    Console.WriteLine("press enter for client, tap s and press enter for server");
-                    GameMode = new NetworkSceneClient(Console.ReadLine() == "s");
+                    UiManager uiManager = new UiManager();
+                    uiManager.ShowListMenu("create server?", "tank.Code.YESORNOCHOOSENOW", ServerSelectionCallback);
+                    _game.AddScene(uiManager.Scene);
                     break;
                 case GameModes.Testing:
                     GameMode = new TestingMode();
+                    _game.AddScene(GameMode.Scene);
                     break;
             }
-            
+        }
+
+        private static void ServerSelectionCallback(int selection) {
+            _game.RemoveScene();
+            GameMode = new NetworkSceneClient(selection == 0);
             _game.AddScene(GameMode.Scene);
         }
     }

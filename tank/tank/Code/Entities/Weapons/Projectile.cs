@@ -21,6 +21,9 @@ namespace tank.Code.Entities.Weapons
             DegOrientation = originTank.Rotation;
             OriginTank = originTank;
             Weapon = originTank.Weapon;
+
+            //define this entity as part of the game pause group
+            Group = (int)PauseGroups.NotMenu;
         }
 
         public override void Update()

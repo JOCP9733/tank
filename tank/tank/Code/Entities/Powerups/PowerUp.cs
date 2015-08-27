@@ -19,8 +19,11 @@ namespace tank.Code.Entities.Powerups
             img.CenterOrigin();
             AddGraphic(img);
 
-            //set the type
+            //set the power up type
             PowerUpType = type;
+
+            //define this entity as part of the game pause group
+            Group = (int)PauseGroups.NotMenu;
 
             //add a collider
             BoxCollider collider = new BoxCollider(img.Width, img.Height, CollidableTags.PowerUp);

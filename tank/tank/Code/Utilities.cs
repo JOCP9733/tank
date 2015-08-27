@@ -171,10 +171,6 @@ namespace tank.Code
         }
     }
 
-
-
-
-
     enum CollidableTags
     {
         Bullet,
@@ -204,6 +200,12 @@ namespace tank.Code
         Testing
     }
 
+    enum YESORNOCHOOSENOW
+    {
+        Yes,
+        No
+    }
+
     enum ProjectileDecorators
     {
         TestBullet,
@@ -220,5 +222,11 @@ namespace tank.Code
         collisionTestBench,
         testlevel,
         networkTestBench
+    }
+
+    enum PauseGroups
+    {
+        Menu,
+        NotMenu
     }
 }

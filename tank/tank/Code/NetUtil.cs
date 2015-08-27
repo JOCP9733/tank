@@ -18,15 +18,15 @@ namespace tank.Code
             return scene.GetEntities<Tank>().Where(t => t.NetworkId == id).ToList()[0];
         }
 
-        public static void SendMessage(NetPeer peer, MessageType messageType, int data, int recipient)
+        public static void SendMessage(NetPeer peer, NetworkMessageType networkMessageType, int data, int recipient)
         {
-            SendMessage(peer, messageType, data, peer.Connections[recipient]);
+            SendMessage(peer, networkMessageType, data, peer.Connections[recipient]);
         }
 
-        public static void SendMessage(NetPeer peer, MessageType messageType, int data, NetConnection recipient)
+        public static void SendMessage(NetPeer peer, NetworkMessageType networkMessageType, int data, NetConnection recipient)
         {
             NetOutgoingMessage message = peer.CreateMessage();
-            message.Write((byte)messageType);
+            message.Write((byte)networkMessageType);
             message.Write(data, 32);
             peer.SendMessage(message, recipient, NetDeliveryMethod.ReliableUnordered);
         }
@@ -90,15 +90,15 @@ namespace tank.Code
         void ServerOnDataHandler(object source, NetworkEventArgs n)
         {
             NetIncomingMessage msg = n.GetData();
-            MessageType msgType = n.GetInfo();
-            if (msgType == MessageType.LoadFinish)
+            NetworkMessageType msgType = n.GetInfo();
+            if (msgType == NetworkMessageType.LoadFinish)
             {
                 //just ignore the message content for now
                 _loadedClients++;
                 if (_loadedClients == _targetClientCount)
                     OnAllLoaded();
             }
-            else if (msgType == MessageType.TankControl)
+            else if (msgType == NetworkMessageType.TankControl)
             {
                 //read from old message
                 int networkId = msg.ReadInt32(32);
@@ -106,7 +106,7 @@ namespace tank.Code
 
                 //write to new message
                 NetOutgoingMessage relayMessage = Server.CreateMessage(n.GetData().LengthBits);
-                relayMessage.Write((byte)MessageType.TankControl);
+                relayMessage.Write((byte)NetworkMessageType.TankControl);
                 relayMessage.Write(networkId, 32);
                 relayMessage.Write((byte)networkAction);
                 Server.SendToAll(relayMessage, NetDeliveryMethod.ReliableUnordered);
@@ -120,9 +120,9 @@ namespace tank.Code
         {
             //tell each client which tank is "theirs"
             for (int i = 0; i < _loadedClients; i++)
-                NetUtil.SendMessage(Server, MessageType.WhichTankCanIControl, i, i);
+                NetUtil.SendMessage(Server, NetworkMessageType.WhichTankCanIControl, i, i);
             //the clients can now unpause the scene
-            SendPauseCommand(MessageType.PauseControl, PauseControl.Play);
+            SendPauseCommand(NetworkMessageType.PauseControl, NetworkPauseControl.Play);
 
 
         }
@@ -132,16 +132,16 @@ namespace tank.Code
         /// </summary>
         private void OnConnect()
         {
-            SendPauseCommand(MessageType.PauseControl, PauseControl.Pause);
+            SendPauseCommand(NetworkMessageType.PauseControl, NetworkPauseControl.Pause);
         }
 
         /// <summary>
         /// Helper function to control pause for each client
         /// </summary>
-        private void SendPauseCommand(MessageType messageType, PauseControl data)
+        private void SendPauseCommand(NetworkMessageType networkMessageType, NetworkPauseControl data)
         {
             NetOutgoingMessage message = Server.CreateMessage();
-            message.Write((byte)messageType);
+            message.Write((byte)networkMessageType);
             message.Write((byte)data);
             Server.SendToAll(message, NetDeliveryMethod.ReliableUnordered);
         }
@@ -149,10 +149,10 @@ namespace tank.Code
         /// <summary>
         /// Helper to send data to all clients
         /// </summary>
-        private void SendToAll(MessageType messageType, int data)
+        private void SendToAll(NetworkMessageType networkMessageType, int data)
         {
             NetOutgoingMessage message = Server.CreateMessage();
-            message.Write((int)messageType, 16);
+            message.Write((int)networkMessageType, 16);
             message.Write(data, 32);
             Server.SendToAll(message, NetDeliveryMethod.ReliableUnordered);
         }
@@ -197,7 +197,7 @@ namespace tank.Code
                         break;
                     case NetIncomingMessageType.Data:
                         //the first four bytes in each message contain the type
-                        var info = (MessageType)msg.ReadByte();
+                        var info = (NetworkMessageType)msg.ReadByte();
                         //notify everyone who wanted to be notified upon message arrival
                         OnServerData?.Invoke(Server, new NetworkEventArgs(msg, info));
                         break;
@@ -215,15 +215,15 @@ namespace tank.Code
     class NetworkEventArgs : EventArgs
     {
         private readonly NetIncomingMessage _data;
-        private readonly MessageType _info;
+        private readonly NetworkMessageType _info;
 
-        public NetworkEventArgs(NetIncomingMessage data, MessageType info)
+        public NetworkEventArgs(NetIncomingMessage data, NetworkMessageType info)
         {
             _data = data;
             _info = info;
         }
 
-        public MessageType GetInfo()
+        public NetworkMessageType GetInfo()
         {
             return _info;
         }
@@ -246,7 +246,7 @@ namespace tank.Code
     /// <summary>
     /// Enum of the available message types, eg the first 4 bytes per data message (->uint = 4 bytes)
     /// </summary>
-    enum MessageType : uint
+    enum NetworkMessageType : uint
     {
         TankControl,
         PauseControl,
@@ -254,7 +254,7 @@ namespace tank.Code
         WhichTankCanIControl //i have no excuse
     }
 
-    enum PauseControl : uint
+    enum NetworkPauseControl : uint
     {
         Pause,
         Play

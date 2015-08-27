@@ -23,7 +23,7 @@ namespace tank.Code.Entities.Tank.Logics.Decorators
 
         void CommandHandler(object source, NetworkEventArgs n)
         {
-            if (n.GetInfo() == MessageType.TankControl)
+            if (n.GetInfo() == NetworkMessageType.TankControl)
             {
                 NetIncomingMessage msg = n.GetData();
                 if (msg.PositionInBytes == 8)

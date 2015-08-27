@@ -15,6 +15,7 @@ namespace tank.Code.UI
         private readonly List<MenuChoice> _choiceList = new List<MenuChoice>();
         private int _currentSelection;
         private readonly OnSelection _callback;
+        private readonly Text _infoText;
 
         public delegate void OnSelection(int selected);
         
@@ -27,7 +28,7 @@ namespace tank.Code.UI
         /// <param name="Y"></param>
         /// <param name="width"></param>
         /// <param name="height"></param>
-        public ListMenu(string enumName, OnSelection callback, int X = 500, int Y = 100, int width = 280, int height = 520) : base(X, Y, Image.CreateRectangle(width, height))
+        public ListMenu(string menuDescription, string enumName, OnSelection callback, int X = 500, int Y = 100, int width = 280, int height = 520) : base(X, Y, Image.CreateRectangle(width, height))
         {
             //enum magic
             Type enumType = Type.GetType(enumName);
@@ -37,9 +38,23 @@ namespace tank.Code.UI
             //save callback
             _callback = callback;
 
+            //set enter to blocked on begin to avoid double-entering menus
+            _blockedKeys[2] = true;
+
             //set background
             Graphic.Color = Color.Gray;
             
+            //draw a info text
+            _infoText = new Text(menuDescription, 48)
+            {
+                X = X,
+                Color = Color.Black,
+                Y = Y - 50
+            };
+
+            //define this entity as part of the menu pause group
+            Group = (int) PauseGroups.Menu;
+
             //how to draw a menu follows
 
             float paddingPercentage = 0.1f;
@@ -133,6 +148,17 @@ namespace tank.Code.UI
             for (int i = 0; i < _choiceList.Count; i++)
                 _choiceList[i].SetSelectionState(i == _currentSelection);
         }
+
+        public override void Render()
+        {
+            base.Render();
+            _infoText.Render();
+        }
+
+
+        /// <summary>
+        /// class representing a menu choice
+        /// </summary>
         class MenuChoice : Entity
         {
             private readonly Text _choice;
@@ -149,6 +175,9 @@ namespace tank.Code.UI
             /// </summary>
             public MenuChoice(int x, int y, int width, int height, string name, Color unselected, Color selected) : base(x, y)
             {
+                //define this entity as part of the menu pause group
+                Group = (int)PauseGroups.Menu;
+
                 //create text item
                 _choice = new Text(name, 32);
 

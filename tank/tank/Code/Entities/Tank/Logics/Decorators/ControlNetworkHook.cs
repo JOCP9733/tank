@@ -30,7 +30,7 @@ namespace tank.Code.Entities.Tank.Logics.Decorators
         {
             //we need a second peer for this to send a message to the server itself
             NetOutgoingMessage message = _client.CreateMessage();
-            message.Write((byte) MessageType.TankControl);
+            message.Write((byte) NetworkMessageType.TankControl);
             message.Write(Tank.NetworkId, 32);
             message.Write((byte)whatNetworkAction);
             _client.SendMessage(message, _client.ServerConnection, NetDeliveryMethod.ReliableUnordered, 0);

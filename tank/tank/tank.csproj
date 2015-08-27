@@ -74,6 +74,8 @@
     <Compile Include="Code\GameMode\TestingMode\TestingMode.cs" />
     <Compile Include="Code\NetUtil.cs" />
     <Compile Include="Code\UI\ListMenu.cs" />
+    <Compile Include="Code\UI\TextDialog.cs" />
+    <Compile Include="Code\UI\Toast.cs" />
     <Compile Include="Code\UI\UIManager.cs" />
     <Compile Include="Code\Utilities.cs" />
     <Compile Include="Program.cs" />

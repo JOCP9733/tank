@@ -70,6 +70,9 @@ namespace tank.Code.Entities.Tank
             Weapon.addDecorator(ProjectileDecorators.TestBullet);
             Weapon.addDecorator(ProjectileDecorators.BulletWallCollider);
 
+            //define this entity as part of the game pause group
+            Group = (int)PauseGroups.NotMenu;
+
             //logic can now be instantiated here already
             Logic = new ProtoLogic(this);
         }
