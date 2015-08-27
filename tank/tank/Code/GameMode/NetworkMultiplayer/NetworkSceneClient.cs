@@ -106,7 +106,16 @@ namespace tank.Code.GameMode.NetworkMultiplayer
                         break;
                     case NetIncomingMessageType.StatusChanged:
                         //register action for when we have loaded all entities
-                        Scene.OnEmptyEntitiesToAdd += LoadFinish;
+                        NetConnectionStatus status = (NetConnectionStatus) msg.ReadByte();
+                        Console.WriteLine(status);
+                        Console.WriteLine(msg.ReadString());
+                        //on successful connect, we add the loadfinish method, which should immediately fire as
+                        //everything probably has loaded yet
+                        if (status == NetConnectionStatus.Connected)
+                        {
+                            Console.WriteLine("connection successful");
+                            Scene.OnEmptyEntitiesToAdd += LoadFinish;
+                        }
                         break;
                     case NetIncomingMessageType.VerboseDebugMessage:
                     case NetIncomingMessageType.DebugMessage:
