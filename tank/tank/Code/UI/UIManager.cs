@@ -20,6 +20,11 @@ namespace tank.Code.UI
             Scene = scene ?? new Scene();
         }
 
+        public void ShowToast(string content, int duration = 1000)
+        {
+            Scene.Add(new Toast(content, duration));
+        }
+
         public void ShowListMenu(string menuDescription, string enumName, ListMenu.OnSelection callback)
         {
             //save callback
@@ -32,16 +37,33 @@ namespace tank.Code.UI
             Scene.PauseGroup((int) PauseGroups.NotMenu);
         }
 
-        public void ShowTextBox(string description, TextDialog.OnAccept callback)
+        public void ShowListMenu(string menuDescription, List<string> values, ListMenu.OnSelection callback)
+        {
+            //save callback
+            _listMenuCallback = callback;
+            //create a list menu, sneakily sneak in the callback that unpauses the game and calls the callback
+            ListMenu m = new ListMenu(menuDescription, values, CallListMenuCallBack);
+            //add menu to scene
+            Scene.Add(m);
+            //pause the rest game
+            Scene.PauseGroup((int)PauseGroups.NotMenu);
+        }
+
+        public void ShowTextBox(string description, TextDialog.OnAccept callback, Predicate<string> acceptValueIf, string defaultValue = "")
         {
             //save callback
             _textDialogCallback = callback;
             //create a text box, sneakily sneak in the callback that unpauses the game and calls the callback
-            TextDialog t = new TextDialog(CallTextDialogCallBack, description);
+            TextDialog t = new TextDialog(CallTextDialogCallBack, description, acceptValueIf, defaultValue);
             //add menu to scene
             Scene.Add(t);
             //pause the rest game
             Scene.PauseGroup((int)PauseGroups.NotMenu);
+        }
+
+        public void ShowTextBox(string description, TextDialog.OnAccept callback)
+        {
+            ShowTextBox(description, callback, t => true);
         }
 
         /// <summary>

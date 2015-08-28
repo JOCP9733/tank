@@ -197,7 +197,8 @@ namespace tank.Code
     enum GameModes
     {
         Network,
-        Testing
+        Testing,
+        LocalMultiplayer
     }
 
     enum YESORNOCHOOSENOW

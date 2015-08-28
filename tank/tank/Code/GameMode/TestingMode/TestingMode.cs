@@ -24,7 +24,7 @@ namespace tank.Code.GameMode.TestingMode
         {
             //tank entity creation was moved to ogmo; see testlevel.oep for adding a decorator to your tank.
             //try to load a project
-            OgmoProject proj = new OgmoProject("Resources/Maps/test.oep");
+            OgmoProject proj = new OgmoProject("Resources/Maps/test.oep", "Resources/Maps/");
 
             //register our function to call for creating entities
             //this just is a string with the method name, the method itself has to be in the entities (see tank)

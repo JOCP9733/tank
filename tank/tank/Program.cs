@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Otter;
 using tank.Code;
 using tank.Code.GameMode;
+using tank.Code.GameMode.LocalMultiplayer;
 using tank.Code.GameMode.NetworkMultiplayer;
 using tank.Code.GameMode.TestingMode;
 using tank.Code.UI;
@@ -24,14 +25,11 @@ namespace tank
             _game.Color = Color.White;
             _game.MouseVisible = true;
 
-            //if s, then create a server
-            //uncomment to test network stuff
-            //
-
             //show a menu
             UiManager uiManager = new UiManager();
-            //ui manager needs fully qualified path to the enum
+            //ui manager needs fully qualified path to the enum the menu is based on
             uiManager.ShowListMenu("gamemode?", "tank.Code.GameModes", OnSelectionCallback);
+            uiManager.ShowToast("use arrow and enter\nkeys to navigate!", 3000);
             _game.Start(uiManager.Scene);
         }
 
@@ -42,6 +40,7 @@ namespace tank
             switch (mode)
             {
                 case GameModes.Network:
+                    //the following 3 lines are everything you need for a menu
                     UiManager uiManager = new UiManager();
                     uiManager.ShowListMenu("create server?", "tank.Code.YESORNOCHOOSENOW", ServerSelectionCallback);
                     _game.AddScene(uiManager.Scene);
@@ -50,12 +49,18 @@ namespace tank
                     GameMode = new TestingMode();
                     _game.AddScene(GameMode.Scene);
                     break;
+                case GameModes.LocalMultiplayer:
+                    GameMode = new LocalMultiplayer();
+                    _game.AddScene(GameMode.Scene);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(mode), mode, null);
             }
         }
 
         private static void ServerSelectionCallback(int selection) {
             _game.RemoveScene();
-            GameMode = new NetworkSceneClient(selection == 0);
+            GameMode = new NetworkMultiplayer(selection == 0);
             _game.AddScene(GameMode.Scene);
         }
     }

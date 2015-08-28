@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using Lidgren.Network;
 using Otter;
 using tank.Code.Entities.Tank;
@@ -6,7 +7,7 @@ using tank.Code.UI;
 
 namespace tank.Code.GameMode.NetworkMultiplayer
 {
-    class NetworkSceneClient : GameMode
+    class NetworkMultiplayer : GameMode
     {
         /// <summary>
         /// Lidgren client
@@ -34,7 +35,7 @@ namespace tank.Code.GameMode.NetworkMultiplayer
         /// </summary>
         private static readonly string _creationMethodName = "MyCreateEntity";
 
-        public NetworkSceneClient(bool createServer = false) : base (GameModes.Network)
+        public NetworkMultiplayer(bool createServer = false) : base (GameModes.Network)
         {
             if(createServer)
                 GameServer = new GameServer();
@@ -70,7 +71,13 @@ namespace tank.Code.GameMode.NetworkMultiplayer
         {
             if (selection == 0) //yes
             {
-                new UiManager(Scene).ShowTextBox("enter ip", enteredString => Client.DiscoverKnownPeer(enteredString, 14242));
+                new UiManager(Scene).ShowTextBox("enter ip", enteredString => Client.DiscoverKnownPeer(enteredString, 14242),
+                    delegate(string ipString)
+                    {
+                        //check whether an ip was entered
+                        IPAddress ipAddress;
+                        return IPAddress.TryParse(ipString, out ipAddress);
+                    });
             }
             else
             {
@@ -151,9 +158,7 @@ namespace tank.Code.GameMode.NetworkMultiplayer
             proj.RegisterTag(CollidableTags.Wall, "CollisionLayer");
 
             //try to load a level into "Scene" 
-            // yeah uh this can only do the testbench :D
-            if (map == Maps.networkTestBench)
-                proj.LoadLevel("Resources/Maps/networkTestBench.oel", Scene);
+            proj.LoadLevel("Resources/Maps/"+map+".oel", Scene);
         }
 
         void IncomingHandler(object source, NetworkEventArgs n)

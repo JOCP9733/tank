@@ -26,21 +26,32 @@
   <ExportCameraPosition>false</ExportCameraPosition>
   <LevelValueDefinitions />
   <LayerDefinitions>
-    <LayerDefinition xsi:type="GridLayerDefinition">
-      <Name>CollisionLayer</Name>
+    <LayerDefinition xsi:type="TileLayerDefinition">
+      <Name>TilesBelowEntities</Name>
       <Grid>
-        <Width>32</Width>
-        <Height>32</Height>
+        <Width>16</Width>
+        <Height>16</Height>
       </Grid>
       <ScrollFactor>
         <X>1</X>
         <Y>1</Y>
       </ScrollFactor>
-      <Color A="255" R="0" G="0" B="0" />
-      <ExportMode>Bitstring</ExportMode>
+      <ExportMode>XMLCoords</ExportMode>
     </LayerDefinition>
     <LayerDefinition xsi:type="TileLayerDefinition">
-      <Name>TilesetLayer</Name>
+      <Name>LowestTiles</Name>
+      <Grid>
+        <Width>16</Width>
+        <Height>16</Height>
+      </Grid>
+      <ScrollFactor>
+        <X>1</X>
+        <Y>1</Y>
+      </ScrollFactor>
+      <ExportMode>XMLCoords</ExportMode>
+    </LayerDefinition>
+    <LayerDefinition xsi:type="TileLayerDefinition">
+      <Name>TilesAboveEntities</Name>
       <Grid>
         <Width>16</Width>
         <Height>16</Height>
@@ -61,6 +72,19 @@
         <X>1</X>
         <Y>1</Y>
       </ScrollFactor>
+    </LayerDefinition>
+    <LayerDefinition xsi:type="GridLayerDefinition">
+      <Name>CollisionLayer</Name>
+      <Grid>
+        <Width>16</Width>
+        <Height>16</Height>
+      </Grid>
+      <ScrollFactor>
+        <X>1</X>
+        <Y>1</Y>
+      </ScrollFactor>
+      <Color A="255" R="0" G="0" B="0" />
+      <ExportMode>Bitstring</ExportMode>
     </LayerDefinition>
   </LayerDefinitions>
   <Tilesets>

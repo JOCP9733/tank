@@ -70,7 +70,8 @@
     <Compile Include="Code\Entities\Weapons\WeaponLogic\ProjectileDecorator.cs" />
     <Compile Include="Code\Entities\Weapons\WeaponLogic\ProtoProjectile.cs" />
     <Compile Include="Code\GameMode\GameMode.cs" />
-    <Compile Include="Code\GameMode\NetworkMultiplayer\NetworkSceneClient.cs" />
+    <Compile Include="Code\GameMode\LocalMultiplayer\LocalMultiplayer.cs" />
+    <Compile Include="Code\GameMode\NetworkMultiplayer\NetworkMultiplayer.cs" />
     <Compile Include="Code\GameMode\TestingMode\TestingMode.cs" />
     <Compile Include="Code\NetUtil.cs" />
     <Compile Include="Code\UI\ListMenu.cs" />
@@ -106,7 +107,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Code\Entities\Weapons\WeaponLogic\Decorators\Effects\" />
-    <Folder Include="Code\GameMode\LocalMultiplayer\" />
     <Folder Include="Code\Menu\" />
   </ItemGroup>
   <ItemGroup>

@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using Otter;
 
 namespace tank.Code.UI
@@ -15,23 +9,32 @@ namespace tank.Code.UI
         private Image _background;
         private readonly OnAccept _callback;
         private bool _blockEnter = true;
+        private readonly Predicate<string> _valueAcceptancePredicate;
+        private string _startingInputValue;
 
         public delegate void OnAccept(string enteredString);
-
-        public TextDialog(OnAccept callback, string description)
+        
+        public TextDialog(OnAccept callback, string description, Predicate<string> predicate, string startingValue)
         {
-            _descriptionText = new Text(description, 32);
-            _descriptionText.Color = Color.Black;
+            //save the predicate that is used to determine whether the result is acceptable
+            _valueAcceptancePredicate = predicate;
+            //init the description
+            _descriptionText = new Text(description, 32) {Color = Color.Black};
+            //register callback for after having been added to a scene
             OnAdded += OnAdd;
+            //save callback
             _callback = callback;
+            //set group to avoid pausing this
             Group = (int) PauseGroups.Menu;
+            //reset input
+            _startingInputValue = startingValue;
         }
 
         private void OnAdd()
         {
-            //reset input
-            Input.KeyString = "";
-
+            //reset keystring
+            Input.KeyString = _startingInputValue;
+            
             //set text position
             _text.X = Scene.Width*0.2f;
             _text.Y = Scene.Height*0.45f;
@@ -61,20 +64,19 @@ namespace tank.Code.UI
                 //block the enter key
                 _blockEnter = true;
                 //remove enters from ip string
-                string ip = Input.KeyString.Replace("\n", "");
+                string value = Input.KeyString.Replace("\n", "");
                 //try to parse an ip out of the entered string
-                IPAddress address;
-                if (IPAddress.TryParse(ip, out address))
+                if (_valueAcceptancePredicate(value))
                 {
                     RemoveSelf();
-                    _callback(ip);
+                    _callback(value);
                 }
                 else
                 {
                     //remove enter from input string
-                    Input.KeyString = ip;
+                    Input.KeyString = value;
                     //notify user that he did shit
-                    Scene.Add(new Toast("ip no valid"));
+                    Scene.Add(new Toast("Sorry, that doesn't\nseem to fit the expected type!", 3000));
                 }
             }
         }

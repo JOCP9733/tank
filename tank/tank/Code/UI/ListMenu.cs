@@ -22,21 +22,19 @@ namespace tank.Code.UI
         /// <summary>
         /// Create a list menu
         /// </summary>
-        /// <param name="enumName"></param>
-        /// <param name="callback"></param>
-        /// <param name="X"></param>
-        /// <param name="Y"></param>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
         public ListMenu(string menuDescription, string enumName, OnSelection callback, int X = 500, int Y = 100, int width = 280, int height = 520) : base(X, Y, Image.CreateRectangle(width, height))
         {
             //enum magic
             Type enumType = Type.GetType(enumName);
+
             if (enumType == null)
                 throw new ArgumentException("Specified enum type could not be found", nameof(enumName));
-
+            
             //save callback
             _callback = callback;
+
+            //register callback for scene add
+            OnAdded += OnAdd;
 
             //set enter to blocked on begin to avoid double-entering menus
             _blockedKeys[2] = true;
@@ -81,7 +79,57 @@ namespace tank.Code.UI
                     enumList.GetValue(i).ToString());
                 _choiceList.Add(newChoice);
             }
+        }
+
+        public ListMenu(string menuDescription, List<string> choiceNames, OnSelection callback, int X = 500, int Y = 100, int width = 280, int height = 520) : base(X, Y, Image.CreateRectangle(width, height))
+        {
+            //save callback
+            _callback = callback;
+
+            //register callback for scene add
             OnAdded += OnAdd;
+
+            //set enter to blocked on begin to avoid double-entering menus
+            _blockedKeys[2] = true;
+
+            //set background
+            Graphic.Color = Color.Gray;
+
+            //draw a info text
+            _infoText = new Text(menuDescription, 48)
+            {
+                X = X,
+                Color = Color.Black,
+                Y = Y - 50
+            };
+
+            //define this entity as part of the menu pause group
+            Group = (int)PauseGroups.Menu;
+
+            //how to draw a menu follows
+
+            float paddingPercentage = 0.1f;
+
+            //Magic.Cast(how many items are in the enum?)
+            int numberOfEnumItems = choiceNames.Count;
+
+            int paddingHeight = (int)((height / numberOfEnumItems) * paddingPercentage);
+            int paddingWidth = (int)((width / numberOfEnumItems) * paddingPercentage);
+
+            //height per item
+            int itemHeight = ((height - ((paddingHeight * (numberOfEnumItems + 1)))) / numberOfEnumItems);
+            int itemWidth = width - paddingWidth * 2;
+
+            //add menu item for each enum item
+            for (int i = 0; i < choiceNames.Count; i++)
+            {
+                MenuChoice newChoice = new MenuChoice(X + paddingWidth,
+                    Y + paddingHeight + (i * paddingHeight) + i * itemHeight,
+                    itemWidth,
+                    itemHeight,
+                    choiceNames[i]);
+                _choiceList.Add(newChoice);
+            }
         }
 
         private void OnAdd()

@@ -17,8 +17,8 @@ namespace tank.Code.Entities.Tank.Logics.Decorators
             if(Program.GameMode.Mode != GameModes.Network)
                 throw new NotSupportedException("The gamemode must be network multiplayer for this to work!");
 
-            if(Program.GameMode is NetworkSceneClient)
-                ((NetworkSceneClient) Program.GameMode).OnClientData += CommandHandler;
+            if(Program.GameMode is NetworkMultiplayer)
+                ((NetworkMultiplayer) Program.GameMode).OnClientData += CommandHandler;
         }
 
         void CommandHandler(object source, NetworkEventArgs n)

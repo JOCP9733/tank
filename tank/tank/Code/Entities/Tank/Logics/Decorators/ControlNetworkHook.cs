@@ -22,8 +22,8 @@ namespace tank.Code.Entities.Tank.Logics.Decorators
                 throw new NotSupportedException("The gamemode must be network multiplayer for this to work!");
 
             //at this point we are fucked if the gamemode isnt a client
-            if (Program.GameMode is NetworkSceneClient)
-                _client = ((NetworkSceneClient) Program.GameMode).Client;
+            if (Program.GameMode is NetworkMultiplayer)
+                _client = ((NetworkMultiplayer) Program.GameMode).Client;
         }
 
         private void SendNotification(NetworkAction whatNetworkAction)
